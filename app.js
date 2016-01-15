@@ -15,6 +15,8 @@ app.set('view engine', 'ejs');
 var index = require('./routes/index');
 app.use('/', index);
 
+var users = require('./routes/users');
+app.use('/', users);
 
 var port = 8080;
 app.listen(port, function(){
