@@ -4,6 +4,9 @@ var app = express();
 var morgan = require('morgan');
 app.use( morgan( 'dev' ) );
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/jepquestions');
+
 app.use(express.static('./public'));
 
 var bodyParser = require('body-parser');
