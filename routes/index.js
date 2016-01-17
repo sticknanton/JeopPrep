@@ -1,12 +1,13 @@
 var express = require('express');
 var router = express.Router();
-
+var mongoose = require('mongoose');
+var db = mongoose.connection;
 
 
 
 router.get('/', function (req, res) {
-  console.log(mongoose);
-  res.render('index', {title: "Jeopardy Machine", questions: questions});
+console.log(db);
+  res.render('index', {title: "Jeopardy Machine"});
 });
 
 

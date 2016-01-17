@@ -5,7 +5,7 @@ var morgan = require('morgan');
 app.use( morgan( 'dev' ) );
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/jepquestions');
+mongoose.connect('mongodb://jepquestions');
 
 app.use(express.static('./public'));
 
@@ -26,6 +26,8 @@ app.use('/api/users', users);
 
 var clues = require('./routes/clues');
 app.use('/api/clues', clues);
+
+
 
 var port = 8080;
 app.listen(port, function(){
