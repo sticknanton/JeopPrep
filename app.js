@@ -22,7 +22,7 @@ var users = require('./routes/users');
 app.use('/api/users', users);
 
 var clues = require('./routes/clues');
-app.ust('/api/clues', clues);
+app.use('/api/clues', clues);
 
 var port = 8080;
 app.listen(port, function(){
