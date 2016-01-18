@@ -4,9 +4,6 @@ var app = express();
 var morgan = require('morgan');
 app.use( morgan( 'dev' ) );
 
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://jepquestions');
-
 app.use(express.static('./public'));
 
 var bodyParser = require('body-parser');
@@ -14,7 +11,7 @@ app.use(bodyParser.urlencoded());
 
 app.set('view engine', 'ejs');
 
-var mongoPath = 'mongodb://localhost/jeopprep';
+var mongoPath = 'mongodb://localhost/jepquestions';
 var mongoose = require('mongoose');
 mongoose.connect(mongoPath);
 
