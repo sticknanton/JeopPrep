@@ -37,6 +37,11 @@ function sortMyCats(data) {
           data.clue[n].category = temp;
         }
     }
+    if(Math.floor(i/6)==0){data.clue[i].value=200;}
+    else if(Math.floor(i/6)==1){data.clue[i].value=400;}
+    else if(Math.floor(i/6)==2){data.clue[i].value=600;}
+    else if(Math.floor(i/6)==3){data.clue[i].value=800;}
+    else if(Math.floor(i/6)==4){data.clue[i].value=1000;}
   }
 }
 
@@ -48,7 +53,7 @@ function countdown() {
 function Decrement() {
   seconds = $("span#seconds");
   seconds.text( secs)
-
+  $('#seconds').show();
   secs--;
   if (secs < 0) {
     clearTimeout(timeout);
@@ -196,14 +201,15 @@ function renderTvListener() {
   $('body').on('click', '.clue', function (e) {
     e.preventDefault();
     clue = $(this);
-    modal.open({content: "<h3>"+clue.find(".question").text()+"</h3>", value: clue.find(".answer").text()});
+    modal.open({ value: clue.find(".answer").text(), width: "100%"});
     secs = 15;
+    $("#content").html("<h3>"+clue.find(".question").text()+"</h3>")
     $("form#answer").show();
-    $('#seconds').show();
     countdown();
     clue.empty();
     clue.removeClass('clue');
     clue.addClass('finishedClue');
+    modal.center();
   })
 }
 function submitAnswer() {
@@ -214,6 +220,8 @@ function submitAnswer() {
     var correct = false;
     console.log(answer);
     var length = rightAnswer.length;
+    modal.close();
+    modal.open({ width: "30%"});
       if (levenshtein(answer, rightAnswer)<=Math.ceil(length*0.2)) {
         correct = true;
         $("#content").html("<h3>NICE ONE!</h3><button class='exit'>Click to continue.</button>")

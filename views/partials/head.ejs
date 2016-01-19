@@ -10,14 +10,17 @@
 <script type="text/x-handlebars-template" id="game-template">
   <div class="game">
       {{#each clue}}
+
       <div class="clue">
         <ul class="clue-details">
           <li>{{ this.category }}</li>
-          <li>{{ this.value }}</li>
+          <li>${{ this.value }}</li>
           <li class="question">{{ this.question  }}</li>
           <li class="answer">{{ this.answer  }}</li>
         </ul>
       </div>
+
       {{/each}}
+
   </div>
 </script>
