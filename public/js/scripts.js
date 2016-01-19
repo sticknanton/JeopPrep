@@ -255,17 +255,71 @@ function renderAnswerListener() {
 	}());
 //Graig is working here
 
+function setSignUpFormHandler() {
+  $('form#sign-up-form').on('submit', function(e){
+    e.preventDefault();
 
+    var usernameField = $(this).find('input[name=username]');
+    var usernameText = usernameField.val();
+    usernameField.val('');
 
+    var passwordField = $(this).find('input[name=password]');
+    var passwordText = passwordField.val();
+    passwordField.val('');
 
+    var userData = {username: usernameText, password: passwordText};
+    console.log(userData);
 
+    createUser(userData, function(user){
+      console.log(user);
+    });
+  });
+}
 
+function createUser(userData, callback) {
+  $.ajax({
+    method: 'post',
+    url: '/api/users',
+    data: {user: userData},
+    success: function(data){
+      callback(data);
+    }
+  });
+}
 
+function setLogInFormHandler(){
+  $('form#log-in-form').on('submit', function(e){
+    e.preventDefault();
 
+    var usernameField = $(this).find('input[name="username"]');
+    var usernameText = usernameField.val();
+    usernameField.val('');
 
+    var passwordField = $(this).find('input[name="password"]');
+    var passwordText = passwordField.val();
+    passwordField.val('');
 
+    var userData = {username: usernameText, password: passwordText};
 
+    logInUser(usernameText, passwordText, function(data){
 
+      $.cookie('token', data.token);
+
+      console.log('Token:', $.cookie('token') );
+    });
+  });
+}
+
+function logInUser(usernameAttempt, passwordAttempt, callback){
+  $.ajax({
+    method: 'post',
+    url: '/api/users/authenticate',
+    data: {username: usernameAttempt, password: passwordAttempt},
+    success: function(data){
+      callback(data);
+    }
+  });
+}
 
 
 
@@ -276,7 +330,9 @@ function renderAnswerListener() {
 
   // Wait until the DOM has loaded before querying the document
   $(function(){
-  getGame();
-  renderTvListener();
-  renderAnswerListener();
+  // getGame();
+  // renderTvListener();
+  // renderAnswerListener();
+    setSignUpFormHandler();
+    setLogInFormHandler();
 });

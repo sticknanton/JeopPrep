@@ -8,7 +8,7 @@ var UserSchema = mongoose.Schema({
   token: {type: String},
   answered: {type: Number}, // Total questions answered
   correct: {type: Number} // Questions answered correctly
-});
+}, {collection: 'jep-users'});
 
 UserSchema.pre('save', function(next){ // before saving new user to Db
   if ( this.isModified('password')) { // upon any changes to password

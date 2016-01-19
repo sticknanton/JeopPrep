@@ -11,8 +11,9 @@ router.get('/', function(req, res){  //GET request to api/users...
 
 router.post('/', function(req, res){  // POST request to /api/users
   var newUser = new User( req.body.user );  // Make new user from sign up form
-  newUser.save(function(err, databaseUser){  // Save user to the db, which will encrypt password
-    res.json(databaseUser);  // Send the new user as json
+  console.log(newUser);
+  newUser.save(function(err, dbUser){  // Save user to the db, which will encrypt password
+    res.json(dbUser);  // Send the new user as json
   });
 });
 
