@@ -4,6 +4,9 @@ function renderDoubleJeopardy(data) {
 }
 //Nick is working here
 
+var secs;
+var timeout;
+
 function sortMyCats(data) {
   var cats = [];
   var length = data.clue.length;
@@ -36,6 +39,31 @@ function sortMyCats(data) {
     }
   }
 }
+
+function countdown() {
+  timeout = setTimeout('Decrement()', 1000);
+
+}
+
+function Decrement() {
+  seconds = $("span#seconds");
+  seconds.text( secs)
+
+  secs--;
+  if (secs < 0) {
+    clearTimeout(timeout);
+    submitAnswer();
+  }else {
+  countdown();
+  }
+
+}
+function getseconds() {
+
+return ("0" + (secs - Math.round( 60))).substr(-2);
+}
+
+
 
 
 
@@ -169,11 +197,17 @@ function renderTvListener() {
     e.preventDefault();
     clue = $(this);
     modal.open({content: "<h3>"+clue.find(".question").text()+"</h3>", value: clue.find(".answer").text()});
+    secs = 15;
+    $("form#answer").show();
+    $('#seconds').show();
+    countdown();
+    clue.empty();
     clue.removeClass('clue');
     clue.addClass('finishedClue');
   })
 }
 function submitAnswer() {
+    clearTimeout(timeout);
     console.log($('form#answer').data("answer"));
     var answer = $('form#answer').find("input[name='answer']").val();
     var rightAnswer = $('form#answer').data("answer");
@@ -181,15 +215,25 @@ function submitAnswer() {
     console.log(answer);
     var length = rightAnswer.length;
       if (levenshtein(answer, rightAnswer)<=Math.ceil(length*0.2)) {
-        console.log('correct!');
         correct = true;
+        $("#content").html("<h3>NICE ONE!</h3><button class='exit'>Click to continue.</button>")
+      }else {
+        $("#content").html("<h3>Sorry!</h3><p>The correct answer was <strong>" + rightAnswer + "</strong></p><button class='exit'>Click to continue.</button>")
       }
-    modal.close();
+      $("form#answer").hide();
+      $("#seconds").hide();
+      modal.center();
+      $('.exit').on('click', function () {
+        $('.exit').removeClass('exit');
+        modal.close();
+      })
+
+
+
 }
 function renderAnswerListener() {
   $('form#answer').on('submit', function(e) {
     e.preventDefault();
-    console.log("dont do ti");
     submitAnswer();
   });
 }
@@ -238,13 +282,14 @@ function renderAnswerListener() {
 		$overlay = $('<div id="overlay"></div>');
 		$modal = $('<div id="modal"></div>');
 		$content = $('<div id="content"></div>');
-    $form = $('<form id="answer">')
+    $form = $('<form id="answer">');
+    $span = $('<span id="seconds">');
       $form.append($('<input type="text" name="answer" placeholder="Answer">'))
       $form.append($('<input type="submit" value="Submit">'))
 
 		$modal.hide();
 		$overlay.hide();
-		$modal.append($content, $close, $form);
+		$modal.append($content, $close, $form, $span);
 
     $(document).ready(function(){
 
@@ -326,15 +371,15 @@ function logInUser(usernameAttempt, passwordAttempt, callback){
 
 
 
- 
+
 
   // Wait until the DOM has loaded before querying the document
   $(function(){
-  // getGame();
-  // renderTvListener();
-  // renderAnswerListener();
+  getGame();
+  renderTvListener();
+  renderAnswerListener();
 
-    setSignUpFormHandler();
-    setLogInFormHandler();
+    // setSignUpFormHandler();
+    // setLogInFormHandler();
 
 });

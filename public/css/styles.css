@@ -27,17 +27,25 @@ ul{
 list-style-type: none;
 }
 .clue-details{
-  margin-left: -28px;
+  /*margin-left: -28px;
   margin-top: 15px;
   width: 70%;
-  text-align: center;
+  text-align: center;*/
 }
 
-.clue li {
+.clue li, .finishedClue li {
   margin: 10%;
 }
 
-
+#seconds{
+  width: 60px;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 35px;
+  font-weight: bold;
+  margin-left: 50%;
+}
 
 
 
@@ -101,7 +109,11 @@ list-style-type: none;
 				border-radius:8px;
 				background:#fff;
 				padding:20px;
+        text-align: center;
 			}
+      #end{
+        text-align: center;
+      }
 
       form#answer{
         text-align: center;
