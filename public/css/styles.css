@@ -3,10 +3,7 @@ body {
   margin: 0;
   padding: 0;
 }
-#game-time{
-  width: 80%;
-  margin-left: 10%;
-}
+
 .finishedClue, .clue{
   width: 14%;
   height: 100px;
@@ -36,6 +33,9 @@ list-style-type: none;
   text-align: center;
 }
 
+.clue li {
+  margin: 10%;
+}
 
 
 
