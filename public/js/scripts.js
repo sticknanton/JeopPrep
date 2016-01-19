@@ -2,6 +2,48 @@ console.log('hello is it me you\'r looking for');
 function renderDoubleJeopardy(data) {
 
 }
+//Nick is working here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Work here
 function renderJeopardy(data) {
   var source = $('#game-template').html();
     var template = Handlebars.compile(source);
@@ -17,6 +59,20 @@ function renderJeopardy(data) {
     $('#game-time').html(compiledHtml);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+//more space
 function getGame(){
   $.ajax({
     method: 'get',
@@ -163,17 +219,30 @@ function renderTvListener() {
       $('body').append($overlay, $modal);
 
     });
-
-
-
 		return method;
 	}());
+//Graig is working here
 
 
 
 
 
-	// Wait until the DOM has loaded before querying the document
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // Wait until the DOM has loaded before querying the document
   $(function(){
   getGame();
   renderTvListener();
