@@ -313,12 +313,18 @@ function setSignUpFormHandler() {
     passwordField.val('');
 
     var userData = {username: usernameText, password: passwordText};
-    console.log(userData);
 
     createUser(userData, function(user){
-      console.log(user);
+      var username = user.username;
+      renderSignUpSuccess(username);
     });
   });
+}
+
+function renderSignUpSuccess(username) {
+  var $successMsg = $('<h6>').addClass('success-msg');
+  $successMsg.text('Welcome, ' + username + '! Please log in to begin.');
+  $('#signup-success-box').append($successMsg);
 }
 
 function createUser(userData, callback) {
@@ -350,7 +356,7 @@ function setLogInFormHandler(){
 
       $.cookie('token', data.token);
 
-      console.log('Token:', $.cookie('token') );
+      renderDashboard(data);
     });
   });
 }
@@ -366,6 +372,10 @@ function logInUser(usernameAttempt, passwordAttempt, callback){
   });
 }
 
+function renderDashboard(userData) {
+
+}
+
 
 
 
@@ -375,9 +385,9 @@ function logInUser(usernameAttempt, passwordAttempt, callback){
 
   // Wait until the DOM has loaded before querying the document
   $(function(){
-  getGame();
-  renderTvListener();
-  renderAnswerListener();
+    getGame();
+    renderTvListener();
+    renderAnswerListener();
 
     // setSignUpFormHandler();
     // setLogInFormHandler();

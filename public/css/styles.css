@@ -3,6 +3,30 @@ body {
   margin: 0;
   padding: 0;
 }
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 10px;
+}
+
+.header {
+  background-color: rgb(175, 198, 224);
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+}
+
+#signup-success-box {
+  text-align: center;
+  padding: 15px;
+}
+
+.success-msg {
+  font-size: 1.5em;
+  width: 75%;
+  margin: 0 auto;
+  background-color: rgb(188, 218, 189);
+}
 
 .finishedClue, .clue{
   width: 14%;
