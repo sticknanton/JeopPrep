@@ -8,24 +8,33 @@ function sortMyCats(data) {
   var cats = [];
   var length = data.clue.length;
   var newData = [];
-  x = 0;
-  console.log(data.clue[x].category);
-  while (cats.length<6) {
+  var x = 0;
+  while (cats.length < 6) {
     if ( $.inArray( data.clue[x].category, cats ) ==-1 ) {
       cats.push(data.clue[x].category);
     }
     x++
-  }
-  for (var i = 0; i < data.length; i++) {
-    data[i]
 
   }
-
-  console.log(cats);
-
-
-
-
+  for (var i = 0; i < data.clue.length; i++) {
+    if (data.clue[i].category != cats[Math.floor(i%6)]) {
+        var n = i+1;
+        var found = false;
+        while (!found && n<length) {
+          if(data.clue[n].category == cats[Math.floor(i%6)]){
+          found=true;
+          }
+          else {
+            n++;
+          }
+        }
+        if(found){
+          var temp = data.clue[i].category;
+          data.clue[i].category = data.clue[n].category;
+          data.clue[n].category = temp;
+        }
+    }
+  }
 }
 
 
@@ -159,33 +168,33 @@ function renderTvListener() {
   $('body').on('click', '.clue', function (e) {
     e.preventDefault();
     clue = $(this);
-    modal.open({content: "<h3>"+clue.find(".question").text()+"</h3>"});
-
+    modal.open({content: "<h3>"+clue.find(".question").text()+"</h3>", value: clue.find(".answer").text()});
+    clue.removeClass('clue');
+    clue.addClass('finishedClue');
   })
-
-  $('form#answer').on('submit',function(e){
-    e.preventDefault();
-    console.log(clue.find(".answer").text());
-    var answer = $(this).find("input[name='answer']").val();
-    var rightAnswer = clue.find(".answer").text();
+}
+function submitAnswer() {
+    console.log($('form#answer').data("answer"));
+    var answer = $('form#answer').find("input[name='answer']").val();
+    var rightAnswer = $('form#answer').data("answer");
     var correct = false;
     console.log(answer);
-    if (rightAnswer.length<8) {
-      if (levenshtein(answer,rightAnswer)<=1) {
+    var length = rightAnswer.length;
+      if (levenshtein(answer, rightAnswer)<=Math.ceil(length*0.2)) {
         console.log('correct!');
         correct = true;
       }
-    }else if (levenshtein(answer,rightAnswer)<=5) {
-      console.log('correct!');
-      correct = true;
-    }
-    clue.removeClass('clue');
-    clue.addClass('finishedClue');
     modal.close();
-
-
+}
+function renderAnswerListener() {
+  $('form#answer').on('submit', function(e) {
+    e.preventDefault();
+    console.log("dont do ti");
+    submitAnswer();
   });
 }
+
+
 
 
 
@@ -213,6 +222,7 @@ function renderTvListener() {
 				width: settings.width || 'auto',
 				height: settings.height || 'auto'
 			});
+      $modal.find('form#answer').data("answer",settings.value)
 
 			method.center();
 			$(window).bind('resize.modal', method.center);
@@ -268,4 +278,5 @@ function renderTvListener() {
   $(function(){
   getGame();
   renderTvListener();
+  renderAnswerListener();
 });
