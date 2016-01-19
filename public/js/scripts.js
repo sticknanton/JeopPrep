@@ -6,17 +6,25 @@ function renderDoubleJeopardy(data) {
 
 function sortMyCats(data) {
   var cats = [];
-  i = 0;
-  console.log(data.clue[i].category);
+  var length = data.clue.length;
+  var newData = [];
+  x = 0;
+  console.log(data.clue[x].category);
   while (cats.length<6) {
-    if ( $.inArray( data.clue[i].category, cats ) ==-1 ) {
-      cats.push(data.clue[i].category);
+    if ( $.inArray( data.clue[x].category, cats ) ==-1 ) {
+      cats.push(data.clue[x].category);
     }
-    i++
+    x++
   }
+  for (var i = 0; i < data.length; i++) {
+    data[i]
+
+  }
+
   console.log(cats);
 
-  
+
+
 
 }
 
