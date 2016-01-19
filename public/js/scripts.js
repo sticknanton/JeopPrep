@@ -333,6 +333,8 @@ function logInUser(usernameAttempt, passwordAttempt, callback){
   // getGame();
   // renderTvListener();
   // renderAnswerListener();
+
     setSignUpFormHandler();
     setLogInFormHandler();
+
 });
