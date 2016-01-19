@@ -326,7 +326,7 @@ function logInUser(usernameAttempt, passwordAttempt, callback){
 
 
 
-
+ 
 
   // Wait until the DOM has loaded before querying the document
   $(function(){
