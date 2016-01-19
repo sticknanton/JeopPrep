@@ -31,25 +31,78 @@ function getGame(){
     }
   });
 }
+
+function levenshtein(str1, str2) {
+  var cost = [],
+      n = str1.length,
+      m = str2.length,
+      i, j;
+  var minimum = function(a, b, c) {
+      var min = a;
+      if (b < min) {
+          min = b;
+      }
+      if (c < min) {
+          min = c;
+      }
+      return min;
+  }
+  if (n == 0) {
+      return;
+  }
+  if (m == 0) {
+      return;
+  }
+  for (var i = 0; i <= n; i++) {
+      cost[i] = [];
+  }
+  for (i = 0; i <= n; i++) {
+      cost[i][0] = i;
+  }
+
+  for (j = 0; j <= m; j++) {
+      cost[0][j] = j;
+  }
+  for (i = 1; i <= n; i++) {
+      var x = str1.charAt(i - 1).toUpperCase();
+      for (j = 1; j <= m; j++) {
+          var y = str2.charAt(j - 1).toUpperCase();
+          if (x == y) {
+              cost[i][j] = cost[i - 1][j - 1];
+          } else {
+              cost[i][j] = 1 + minimum(cost[i - 1][j - 1], cost[i][j - 1], cost[i - 1][j]);
+          }
+      }
+  }
+  return cost[n][m];
+}
+
 function renderTvListener() {
   $('body').on('click', '.clue', function (e) {
     e.preventDefault();
     clue = $(this);
     modal.open({content: "<h3>"+clue.find(".question").text()+"</h3>"});
 
-
   })
-
-
 
   $('form#answer').on('submit',function(e){
     e.preventDefault();
     console.log(clue.find(".answer").text());
-    answer = $(this).find("input[name='answer']").val();
+    var answer = $(this).find("input[name='answer']").val();
+    var rightAnswer = clue.find(".answer").text();
+    var correct = false;
     console.log(answer);
-    if (answer == clue.find(".answer").text()) {
+    if (rightAnswer.length<8) {
+      if (levenshtein(answer,rightAnswer)<=1) {
+        console.log('correct!');
+        correct = true;
+      }
+    }else if (levenshtein(answer,rightAnswer)<=5) {
       console.log('correct!');
+      correct = true;
     }
+    clue.removeClass('clue');
+    clue.addClass('finishedClue');
     modal.close();
 
 
@@ -115,6 +168,10 @@ function renderTvListener() {
 
 		return method;
 	}());
+
+
+
+
 
 	// Wait until the DOM has loaded before querying the document
   $(function(){
