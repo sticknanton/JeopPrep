@@ -4,7 +4,21 @@ function renderDoubleJeopardy(data) {
 }
 //Nick is working here
 
+function sortMyCats(data) {
+  var cats = [];
+  i = 0;
+  console.log(data.clue[i].category);
+  while (cats.length<6) {
+    if ( $.inArray( data.clue[i].category, cats ) ==-1 ) {
+      cats.push(data.clue[i].category);
+    }
+    i++
+  }
+  console.log(cats);
 
+  
+
+}
 
 
 
@@ -54,7 +68,7 @@ function renderJeopardy(data) {
         templateData.clue.push(clue);
       }
     })
-
+    sortMyCats(templateData);
     var compiledHtml = template(templateData);
     $('#game-time').html(compiledHtml);
 }
