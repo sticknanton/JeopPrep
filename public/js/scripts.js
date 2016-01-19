@@ -364,8 +364,9 @@ function setLogInFormHandler(){
     logInUser(usernameText, passwordText, function(data){
 
       $.cookie('token', data.token);
-
+      console.log(data);
       renderDashboard(data);
+      updateView();
     });
   });
 }
@@ -382,7 +383,30 @@ function logInUser(usernameAttempt, passwordAttempt, callback){
 }
 
 function renderDashboard(userData) {
+  $('#user-status').empty();
+  var $userMsg = $('<h5>').text('Logged in as ' + userData.username);
+  $('#user-status').append($userMsg);
 
+  var $logoutButton = $('<button>').attr({class: 'button-primary', id: 'logout'}).text('Log Out');
+  $('#user-status').append($logoutButton);
+
+}
+
+function setLogoutHandler() {
+  $('body').on('click', '#logout', function(){
+    $.removeCookie('token');
+    updateView();
+  });
+}
+
+function updateView(){
+  if ( $.cookie('token') ) {
+    console.log('token set');
+    $('#user-manager').hide();
+  } else {
+    console.log('no token');
+    $('#user-manager').show();
+  }
 }
 
 
@@ -394,11 +418,13 @@ function renderDashboard(userData) {
 
   // Wait until the DOM has loaded before querying the document
   $(function(){
+    updateView();
     getGame();
     renderTvListener();
     renderAnswerListener();
 
-    // setSignUpFormHandler();
-    // setLogInFormHandler();
+    setSignUpFormHandler();
+    setLogInFormHandler();
+    setLogoutHandler();
 
 });

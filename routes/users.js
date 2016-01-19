@@ -36,7 +36,7 @@ router.post('/authenticate', function(req, res){  // POST request to /api/users/
         if(isMatch){  // If correct
           dbUser.setToken(err, function(){ // use setToken method
             // Send token as json to be stored in cookie to show user is logged in
-            res.json({description: 'success', token: dbUser.token});
+            res.json({description: 'success', token: dbUser.token, username: dbUser.username});
           });
         }
       });
