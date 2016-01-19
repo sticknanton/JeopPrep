@@ -8,13 +8,13 @@ var UserSchema = mongoose.Schema({
   token: {type: String},
   answered: {type: Number}, // Total questions answered
   correct: {type: Number} // Questions answered correctly
-}, {collection: 'jep-users'});
+});
 
 UserSchema.pre('save', function(next){ // before saving new user to Db
-  if ( this.isModified('password')) { // upon any changes to password
+  if ( this.isModified('password') ) { // upon any changes to password
     this.password = bcrypt.hashSync(this.password, 10); // run bcrypt on password to make secure
   }
-  return next; // move on to next thing
+  return next(); // move on to next thing
 });
 
 // ~~~ Generate and assign token to user when logging in with correct password ~~~
