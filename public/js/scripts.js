@@ -220,6 +220,7 @@ function submitAnswer() {
       }else {
         $("#content").html("<h3>Sorry!</h3><p>The correct answer was <strong>" + rightAnswer + "</strong></p><button class='exit'>Click to continue.</button>")
       }
+      $("form#answer").find('input[type=text]').val('');
       $("form#answer").hide();
       $("#seconds").hide();
       modal.center();
