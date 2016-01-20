@@ -441,7 +441,11 @@ function updateView(){
     $('#user-manager').hide();
     $('#user-dashboard').show();
     getCurrentUser(function(userData){
-      renderUserHeader(userData);
+      if (userData.description === "No User Found") {
+        renderHomeView();
+      } else {
+        renderUserHeader(userData);
+      }
     });
   } else {
     renderHomeView();
