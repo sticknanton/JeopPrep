@@ -482,6 +482,7 @@ function setViewStatsHandler(){
 }
 
 function renderUserStats(user) {
+  $('#game-time').hide();
   var source = $('#view-stats-template').html();
   var template = Handlebars.compile(source);
   var compiled = template(user);
