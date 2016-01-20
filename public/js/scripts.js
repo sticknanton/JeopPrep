@@ -226,8 +226,10 @@ function submitAnswer(user,worth) {
         correct = true;
         $("#content").html("<h3>NICE ONE!</h3><button class='exit'>Click to continue.</button>")
       }else {
+
         $("#content").html("<h3 class='message'>Sorry!</h3><p>The correct answer was <strong>" + rightAnswer + "</strong></p><button class='exit'>Click to continue.</button><button class='challenge'>Click to challenge.</button>")
         correct = false;
+
       }
       $('button.challenge').show();
       $("form#answer").hide();
