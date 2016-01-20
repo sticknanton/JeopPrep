@@ -128,6 +128,7 @@ function isTheGameOver() {
       }
     });
   }
+
 };
 
 
@@ -244,17 +245,17 @@ function submitAnswer(user,worth) {
     var rightAnswer = $('form#answer').data("answer");
     console.log(answer);
     console.log(rightAnswer);
-    var correct;
+    var correct ="false";
     var length = rightAnswer.length;
     modal.close();
     modal.open({ width: "30%"});
       if (levenshtein(answer, rightAnswer)<=Math.ceil(length*0.2)) {
-        correct = true;
+        correct = "true";
         $("#content").html("<h3>NICE ONE!</h3><button class='exit'>Click to continue.</button>")
       }else {
 
         $("#content").html("<h3 class='message'>Sorry!</h3><p>The correct answer was <strong>" + rightAnswer + "</strong></p><button class='exit'>Click to continue.</button><button class='challenge'>Click to challenge.</button>")
-        correct = false;
+        correct = "false";
 
       }
       $('button.challenge').show();
@@ -264,7 +265,7 @@ function submitAnswer(user,worth) {
 
 
       $('.challenge').on('click', function () {
-        correct = true;
+        correct = "true";
         $('.challenge').hide();
         $('.challenge').removeClass('challenge');
         $('.message').text("Sorry about that we\'ll mark that as right")
@@ -272,7 +273,7 @@ function submitAnswer(user,worth) {
 
       $('.exit').on('click', function () {
         $('.exit').removeClass('exit');
-        if (correct) {
+        if (correct=="true") {
             $('.this-game').text( (parseInt($('.this-game').text()) + parseInt(worth)) );
         }
         var addThis = parseInt(worth);

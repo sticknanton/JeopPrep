@@ -36,7 +36,7 @@ router.patch('/', function(req, res){  // PATCH request to /api/users
     }
     else{
       req.user.answered+=1; // No matter what, add to total questions answered
-      if(req.body.correct){
+      if(req.body.correct=="true"){
         req.user.correct+=1;
         req.user.totalCash+=parseInt(req.body.worth);  //user.correct should equal 0 or 1
       }
