@@ -104,10 +104,30 @@ return ("0" + (secs - Math.round( 60))).substr(-2);
 
 
 function isTheGameOver() {
-  var hasClues = $('body').find('.clue');
-  if(hasClues){
+  if ($("div.clue")[0]){
     console.log('keep going');
-    return;
+  }
+  else {
+    getCurrentUser( function (data) {
+      var user = data.user
+      var score = parseInt($('.this-game').text());
+      console.log('time to end this game and tell you your score and shit');
+      $('.game').empty();
+      $('.game').hide();
+      $('body').append($('<h2 class="final-score">').text('Your score for this game was $'+score));
+      if(user.highScore<score)
+      {
+        $.ajax({
+          method: 'patch',
+          url: 'api/users',
+          data: {highScore: score},
+          success: function (data) {
+            $('body').append($('<h1 class="high-score">').text('CONGRATS ON YOUR NEW HIGH SCORE!'));
+          }
+        });
+      }
+
+    })
   }
 };
 
@@ -118,6 +138,7 @@ function renderJeopardy(data) {
     var template = Handlebars.compile(source);
     var templateData = { clue:[] , score:0}
     data.forEach( function (clue) {
+
       if(clue.round == "Jeopardy!"){
         templateData.clue.push(clue);
       }
@@ -205,6 +226,8 @@ function renderTvListener(user) {
   $('body').on('click', '.clue', function (e) {
     e.preventDefault();
     clue = $(this);
+    clue.removeClass('clue');
+    clue.addClass('finishedClue');
     modal.open({ value: clue.find(".answer").text(), width: "100%"});
     secs = 15;
     $("#content").html("<h3>"+clue.find(".question").text()+"</h3>")
@@ -212,8 +235,6 @@ function renderTvListener(user) {
     var worth = clue.find(".value").text();
     countdown();
     clue.empty();
-    clue.removeClass('clue');
-    clue.addClass('finishedClue');
     modal.center();
     renderAnswerListener(user,worth);
   })
