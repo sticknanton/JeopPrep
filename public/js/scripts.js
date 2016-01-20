@@ -45,27 +45,25 @@ function sortMyCats(data) {
   return data;
 }
 
-function countdown() {
-  timeout = setTimeout('Decrement()', 1000);
+function countdown(user, worth) {
+  // timeout = setTimeout('Decrement()', 1000);
+  timeout = setTimeout(function(){ Decrement(user, worth) }, 1000);
 }
 
-function Decrement() {
+function Decrement(user, worth) {
   seconds = $("span#seconds");
   seconds.text( secs)
   seconds.show();
   secs--;
   if (secs < 0) {
     clearTimeout(timeout);
-    // submitAnswer(user,worth);
+    submitAnswer(user,worth);
   }else {
-  countdown();
+  countdown(user, worth);
   }
 
 }
-function getseconds() {
 
-return ("0" + (secs - Math.round( 60))).substr(-2);
-}
 
 
 
@@ -233,7 +231,7 @@ function renderTvListener(user) {
     $("#content").html("<h3>"+clue.find(".question").text()+"</h3>")
     $("form#answer").show();
     var worth = clue.find(".value").text();
-    countdown();
+    countdown(user, worth);
     clue.empty();
     modal.center();
     renderAnswerListener(user,worth);
@@ -280,13 +278,11 @@ function submitAnswer(user,worth) {
         updateUser(correct, addThis, function (updatedUser) {
           user = updatedUser;
         });
-        console.log(user.answered + ' ' + user.correct + ' ' + user.totalCash);
+
         modal.close();
         $("form#answer").find('input[type=text]').val('');
         isTheGameOver();
       })
-
-      console.log(user.answered + ' ' + user.correct + ' ' + user.totalCash);
 }
 
 function renderAnswerListener(user,worth) {
