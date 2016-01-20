@@ -204,14 +204,18 @@ function renderTvListener() {
     secs = 15;
     $("#content").html("<h3>"+clue.find(".question").text()+"</h3>")
     $("form#answer").show();
+    var worth = clue.find(".value").text()
     countdown();
     clue.empty();
     clue.removeClass('clue');
     clue.addClass('finishedClue');
     modal.center();
+    renderAnswerListener(worth);
   })
 }
-function submitAnswer() {
+function submitAnswer(worth) {
+  getCurrentUser(function (data) {
+    var user = data.user;
     clearTimeout(timeout);
     console.log($('form#answer').data("answer"));
     var answer = $('form#answer').find("input[name='answer']").val();
@@ -253,16 +257,12 @@ function submitAnswer() {
         }
         modal.close();
       })
-
-
-
-
-
+    })
 }
-function renderAnswerListener() {
+function renderAnswerListener(worth) {
   $('form#answer').on('submit', function(e) {
     e.preventDefault();
-    submitAnswer();
+    submitAnswer(worth);
   });
 }
 
@@ -452,7 +452,7 @@ function setNewGameHandler() {
   $('body').on('click', '.new-game', function(){
     getGame();
     renderTvListener();
-    renderAnswerListener();
+
   });
 }
 
