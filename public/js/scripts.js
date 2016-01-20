@@ -104,7 +104,6 @@ return ("0" + (secs - Math.round( 60))).substr(-2);
 
 
 function isTheGameOver() {
-<<<<<<< 71cffe931543a93f6cad7722fd135298bfb1e967
   if ($("div.clue")[0]){
     console.log('keep going');
   }
@@ -127,13 +126,9 @@ function isTheGameOver() {
           }
         });
       }
-
-    })
+    });
   }
-=======
-
->>>>>>> Basic leaderboard rendering
-};
+}
 
 
 // Work here
