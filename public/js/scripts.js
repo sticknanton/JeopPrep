@@ -137,7 +137,6 @@ function renderJeopardy(data) {
     var template = Handlebars.compile(source);
     var templateData = { clue:[] , score:0}
     data.forEach( function (clue) {
-
       if(clue.round == "Jeopardy!"){
         templateData.clue.push(clue);
       }
