@@ -31,8 +31,11 @@ router.post('/', function(req, res){  // POST request to /api/users
 // Whenever user answers question, update stats
 router.patch('/', function(req, res){  // PATCH request to /api/users
   if(req.user){  // IF a user has been found via token
-    req.user.answered++; // No matter what, add to total questions answered
-    req.user.correct += req.body.user.correct;  //user.correct should equal 0 or 1
+    req.user.answered+=1; // No matter what, add to total questions answered
+    if(req.body.correct){
+      req.user.correct+=1;
+      req.user.totalCash+=parseInt(req.body.worth);  //user.correct should equal 0 or 1
+    }
     req.user.save(function(err, dbUser){  // Save the user with updated stats
       res.json(dbUser); // Send the updated user as JSON
     });

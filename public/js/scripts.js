@@ -47,17 +47,16 @@ function sortMyCats(data) {
 
 function countdown() {
   timeout = setTimeout('Decrement()', 1000);
-
 }
 
 function Decrement() {
   seconds = $("span#seconds");
   seconds.text( secs)
-  $('#seconds').show();
+  seconds.show();
   secs--;
   if (secs < 0) {
     clearTimeout(timeout);
-    submitAnswer();
+    // submitAnswer(user,worth);
   }else {
   countdown();
   }
@@ -196,7 +195,7 @@ function levenshtein(str1, str2) {
   return cost[n][m];
 }
 
-function renderTvListener() {
+function renderTvListener(user) {
   $('body').on('click', '.clue', function (e) {
     e.preventDefault();
     clue = $(this);
@@ -204,25 +203,22 @@ function renderTvListener() {
     secs = 15;
     $("#content").html("<h3>"+clue.find(".question").text()+"</h3>")
     $("form#answer").show();
-    var worth = clue.find(".value").text()
+    var worth = clue.find(".value").text();
     countdown();
     clue.empty();
     clue.removeClass('clue');
     clue.addClass('finishedClue');
     modal.center();
-    renderAnswerListener(worth);
+    renderAnswerListener(user,worth);
   })
 }
-function submitAnswer(points) {
-  getCurrentUser(function (data) {
-    var user = data.user;
-    var worth = points;
+function submitAnswer(user,worth) {
     clearTimeout(timeout);
-    console.log($('form#answer').data("answer"));
     var answer = $('form#answer').find("input[name='answer']").val();
     var rightAnswer = $('form#answer').data("answer");
-    var correct = false;
     console.log(answer);
+    console.log(rightAnswer);
+    var correct;
     var length = rightAnswer.length;
     modal.close();
     modal.open({ width: "30%"});
@@ -231,9 +227,8 @@ function submitAnswer(points) {
         $("#content").html("<h3>NICE ONE!</h3><button class='exit'>Click to continue.</button>")
       }else {
         $("#content").html("<h3 class='message'>Sorry!</h3><p>The correct answer was <strong>" + rightAnswer + "</strong></p><button class='exit'>Click to continue.</button><button class='challenge'>Click to challenge.</button>")
-
+        correct = false;
       }
-      $("form#answer").find('input[type=text]').val('');
       $('button.challenge').show();
       $("form#answer").hide();
       $("#seconds").hide();
@@ -250,22 +245,24 @@ function submitAnswer(points) {
       $('.exit').on('click', function () {
         $('.exit').removeClass('exit');
         if (correct) {
-          user.answered+=1;
-          user.correct+=1;
-          user.totalCash += parseInt(worth);
-          console.log(user.answered + ' ' + user.correct + ' ' + user.totalCash);
-          $('.this-game').text( (parseInt($('.this-game').text()) + parseInt(worth)) );
+            $('.this-game').text( (parseInt($('.this-game').text()) + parseInt(worth)) );
         }
+        var addThis = parseInt(worth);
+        updateUser(correct, addThis, function (updatedUser) {
+          user = updatedUser;
+        });
+        console.log(user.answered + ' ' + user.correct + ' ' + user.totalCash);
         modal.close();
+        $("form#answer").find('input[type=text]').val('');
       })
-    })
 
+      console.log(user.answered + ' ' + user.correct + ' ' + user.totalCash);
 }
 
-function renderAnswerListener(worth) {
+function renderAnswerListener(user,worth) {
   $('form#answer').on('submit', function(e) {
     e.preventDefault();
-    submitAnswer(worth);
+    submitAnswer(user,worth);
   });
 }
 
@@ -358,7 +355,7 @@ function renderSignUpSuccess(username) {
   $('#signup-success-box').append($successMsg);
 }
 
-function createUser(userData, callback) {
+function createUser(userData, callback, user) {
   $.ajax({
     method: 'post',
     url: '/api/users',
@@ -391,7 +388,16 @@ function setLogInFormHandler(){
     });
   });
 }
-
+function updateUser(correct, worth, callback) {
+  $.ajax({
+    method: 'patch',
+    url: 'api/users',
+    data: {correct: correct, worth: worth},
+    success: function (data) {
+      callback(data);
+    }
+  });
+}
 function logInUser(usernameAttempt, passwordAttempt, callback){
   $.ajax({
     method: 'post',
@@ -457,7 +463,10 @@ function setNewGameHandler() {
     $('#view-stats').hide();
     $('#game-time').show();
     getGame();
-    renderTvListener();
+    getCurrentUser( function (data) {
+      renderTvListener(data.user)
+    } );
+
   });
 }
 
