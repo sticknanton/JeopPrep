@@ -201,27 +201,32 @@ function renderTvListener() {
   $('body').on('click', '.clue', function (e) {
     e.preventDefault();
     clue = $(this);
-    modal.open({ value: clue.find(".answer").text(), width: "100%"});
+    modal.open({ value: clue.find(".answer").text(), points: clue.find(".value").text() , width: "100%"});
     secs = 15;
     $("#content").html("<h3>"+clue.find(".question").text()+"</h3>")
     $("form#answer").show();
     countdown();
+    renderAnswerListener(clue.find(".value").text());
     clue.empty();
     clue.removeClass('clue');
     clue.addClass('finishedClue');
     modal.center();
   })
 }
-function submitAnswer() {
+function submitAnswer(worth) {
+  getCurrentUser(function (data) {
+    var user = data.user;
+    console.log(user);
+
+    console.log(worth);
     clearTimeout(timeout);
-    console.log($('form#answer').data("answer"));
     var answer = $('form#answer').find("input[name='answer']").val();
     var rightAnswer = $('form#answer').data("answer");
     var correct = false;
-    console.log(answer);
     var length = rightAnswer.length;
     modal.close();
     modal.open({ width: "30%"});
+
       if (levenshtein(answer, rightAnswer)<=Math.ceil(length*0.2)) {
         correct = true;
         $("#content").html("<h3>NICE ONE!</h3><button class='exit'>Click to continue.</button>")
@@ -234,16 +239,20 @@ function submitAnswer() {
       modal.center();
       $('.exit').on('click', function () {
         $('.exit').removeClass('exit');
+        if (correct) {
+          user.answered+=1;
+          user.correct+=1;
+          user.totalCash += parseInt(worth);
+          console.log(user.answered + ' ' + user.correct + ' ' + user.totalCash);
+        }
         modal.close();
       })
-
-
-
+  })
 }
-function renderAnswerListener() {
+function renderAnswerListener(worth) {
   $('form#answer').on('submit', function(e) {
     e.preventDefault();
-    submitAnswer();
+    submitAnswer(worth);
   });
 }
 
@@ -275,7 +284,7 @@ function renderAnswerListener() {
 				width: settings.width || 'auto',
 				height: settings.height || 'auto'
 			});
-      $modal.find('form#answer').data("answer",settings.value)
+      $modal.find('form#answer').data("answer",settings.value);
 
 			method.center();
 			$(window).bind('resize.modal', method.center);
@@ -433,11 +442,11 @@ function setNewGameHandler() {
   $('body').on('click', '.new-game', function(){
     getGame();
     renderTvListener();
-    renderAnswerListener();
   });
 }
 
   // Wait until the DOM has loaded before querying the document
+
 $(function(){
   updateView();
   setSignUpFormHandler();

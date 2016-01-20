@@ -6,8 +6,10 @@ var UserSchema = mongoose.Schema({
   username: {type: String, required: true},
   password: {type: String, required: true},
   token: {type: String},
-  answered: {type: Number}, // Total questions answered
-  correct: {type: Number} // Questions answered correctly
+  answered: {type: Number, default: 0}, // Total questions answered
+  correct: {type: Number, default: 0}, // Questions answered correctly
+  totalCash: {type: Number, default: 0},
+  highScore: {type: Number, default: 0}
 });
 
 UserSchema.pre('save', function(next){ // before saving new user to Db
