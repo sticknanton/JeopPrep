@@ -429,21 +429,19 @@ function renderHomeView(){
   $('#user-status').append([$welcome, $msg]);
 }
 
-
-
-
+function setNewGameHandler() {
+  $('body').on('click', '.new-game', function(){
+    getGame();
+    renderTvListener();
+    renderAnswerListener();
+  });
+}
 
   // Wait until the DOM has loaded before querying the document
-  $(function(){
-    updateView();
-    setSignUpFormHandler();
-    setLogInFormHandler();
-    setLogOutHandler();
-
-    // getGame();
-    // renderTvListener();
-    // renderAnswerListener();
-
-
-
+$(function(){
+  updateView();
+  setSignUpFormHandler();
+  setLogInFormHandler();
+  setLogOutHandler();
+  setNewGameHandler();
 });
