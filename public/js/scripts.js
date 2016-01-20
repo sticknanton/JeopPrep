@@ -111,8 +111,7 @@ return ("0" + (secs - Math.round( 60))).substr(-2);
 function renderJeopardy(data) {
   var source = $('#game-template').html();
     var template = Handlebars.compile(source);
-    var templateData = { clue:[] }
-    var thisGame = [];
+    var templateData = { clue:[] , score:0}
     data.forEach( function (clue) {
       if(clue.round == "Jeopardy!"){
         templateData.clue.push(clue);
@@ -235,6 +234,7 @@ function submitAnswer() {
       $("#seconds").hide();
       modal.center();
 
+
       $('.challenge').on('click', function () {
         correct = true;
         $('.challenge').hide();
@@ -244,7 +244,13 @@ function submitAnswer() {
 
       $('.exit').on('click', function () {
         $('.exit').removeClass('exit');
-
+        if (correct) {
+          user.answered+=1;
+          user.correct+=1;
+          user.totalCash += parseInt(worth);
+          console.log(user.answered + ' ' + user.correct + ' ' + user.totalCash);
+          $('.this-game').text( (parseInt($('.this-game').text()) + parseInt(worth)) );
+        }
         modal.close();
       })
 
