@@ -365,7 +365,6 @@ function setLogInFormHandler(){
 
       $.cookie('token', data.token);
       console.log(data);
-      renderDashboard(data);
       updateView();
     });
   });
@@ -378,24 +377,8 @@ function logInUser(usernameAttempt, passwordAttempt, callback){
     data: {username: usernameAttempt, password: passwordAttempt},
     success: function(data){
       callback(data);
+      $('#signup-success-box').empty();
     }
-  });
-}
-
-function renderDashboard(userData) {
-  $('#user-status').empty();
-  var $userMsg = $('<h5>').text('Logged in as ' + userData.username);
-  $('#user-status').append($userMsg);
-
-  var $logoutButton = $('<button>').attr({class: 'button-primary', id: 'logout'}).text('Log Out');
-  $('#user-status').append($logoutButton);
-
-}
-
-function setLogoutHandler() {
-  $('body').on('click', '#logout', function(){
-    $.removeCookie('token');
-    updateView();
   });
 }
 
@@ -403,14 +386,48 @@ function updateView(){
   if ( $.cookie('token') ) {
     console.log('token set');
     $('#user-manager').hide();
+    getCurrentUser(function(userData){
+      renderDashboard(userData);
+    });
   } else {
     console.log('no token');
-    $('#user-manager').show();
+    renderHomeView();
   }
 }
 
+function getCurrentUser(callback) {
+  $.ajax({
+    method: 'get',
+    url: '/api/users',
+    success: function(data){
+      callback(data);
+    }
+  });
+}
 
+function renderDashboard(userData){
+  var user = userData.user;
+  $('#user-status').empty();
+  var $userMsg = $('<h5>').text('Welcome, ' + user.username + ' !');
+  var $logout = $('<button>').attr({class: 'button-primary', id: 'logout'}).text('Log Out');
+  $('#user-status').append([$userMsg, $logout]);
+}
 
+function setLogOutHandler() {
+  $('body').on('click', '#logout', function(){
+    $.removeCookie('token');
+    updateView();
+  });
+}
+
+function renderHomeView(){
+  $('#user-manager').show();
+
+  $('#user-status').empty();
+  var $welcome = $('<h5>').text('Welcome!');
+  var $msg = $('<h6>').text('Please Log In to Play');
+  $('#user-status').append([$welcome, $msg]);
+}
 
 
 
@@ -419,12 +436,14 @@ function updateView(){
   // Wait until the DOM has loaded before querying the document
   $(function(){
     updateView();
+    setSignUpFormHandler();
+    setLogInFormHandler();
+    setLogOutHandler();
+
     getGame();
     renderTvListener();
     renderAnswerListener();
 
-    setSignUpFormHandler();
-    setLogInFormHandler();
-    setLogoutHandler();
+
 
 });

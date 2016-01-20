@@ -3,10 +3,14 @@ var router = express.Router();
 var User = require('../models/user');
 var mongoose = require('mongoose');
 
-router.get('/', function(req, res){  //GET request to api/users...
-  User.find({}, function(err, databaseUsers){  //get all users from db
-    res.json({users: databaseUsers}); // send down as json
-  });
+// Get Current User //
+
+router.get('/', function(req, res){
+  if (req.user) {
+    res.json( { user: req.user } );
+  } else {
+    res.json( { description: 'No User Found' } );
+  }
 });
 
 router.post('/', function(req, res){  // POST request to /api/users
