@@ -10,14 +10,13 @@ var timeout;
 function sortMyCats(data) {
   var cats = [];
   var length = data.clue.length;
-  var newData = [];
+  console.log(data.score);
   var x = 0;
   while (cats.length < 6) {
     if ( $.inArray( data.clue[x].category, cats ) ==-1 ) {
       cats.push(data.clue[x].category);
     }
     x++
-
   }
   for (var i = 0; i < data.clue.length; i++) {
     if (data.clue[i].category != cats[Math.floor(i%6)]) {
@@ -32,9 +31,9 @@ function sortMyCats(data) {
           }
         }
         if(found){
-          var temp = data.clue[i].category;
-          data.clue[i].category = data.clue[n].category;
-          data.clue[n].category = temp;
+          var temp = data.clue[i];
+          data.clue[i] = data.clue[n];
+          data.clue[n] = temp;
         }
     }
     if(Math.floor(i/6)==0){data.clue[i].value=200;}
@@ -43,6 +42,7 @@ function sortMyCats(data) {
     else if(Math.floor(i/6)==3){data.clue[i].value=800;}
     else if(Math.floor(i/6)==4){data.clue[i].value=1000;}
   }
+  return data;
 }
 
 function countdown() {
@@ -103,7 +103,9 @@ return ("0" + (secs - Math.round( 60))).substr(-2);
 
 
 
-
+function isTheGameOver() {
+  
+};
 
 
 // Work here
@@ -116,7 +118,7 @@ function renderJeopardy(data) {
         templateData.clue.push(clue);
       }
     })
-    sortMyCats(templateData);
+    templateData = sortMyCats(templateData);
     var compiledHtml = template(templateData);
     $('#game-time').html(compiledHtml);
 }
@@ -256,6 +258,7 @@ function submitAnswer(user,worth) {
         console.log(user.answered + ' ' + user.correct + ' ' + user.totalCash);
         modal.close();
         $("form#answer").find('input[type=text]').val('');
+        isTheGameOver();
       })
 
       console.log(user.answered + ' ' + user.correct + ' ' + user.totalCash);
