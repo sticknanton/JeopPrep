@@ -213,10 +213,10 @@ function renderTvListener() {
     renderAnswerListener(worth);
   })
 }
-function submitAnswer(worth) {
+function submitAnswer(points) {
   getCurrentUser(function (data) {
     var user = data.user;
-
+    var worth = points;
     clearTimeout(timeout);
     console.log($('form#answer').data("answer"));
     var answer = $('form#answer').find("input[name='answer']").val();
@@ -265,7 +265,7 @@ function submitAnswer(worth) {
 function renderAnswerListener(worth) {
   $('form#answer').on('submit', function(e) {
     e.preventDefault();
-    submitAnswer();
+    submitAnswer(worth);
   });
 }
 
