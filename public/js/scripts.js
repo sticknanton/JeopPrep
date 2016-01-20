@@ -128,7 +128,8 @@ function isTheGameOver() {
       }
     });
   }
-}
+};
+
 
 
 // Work here
@@ -527,7 +528,6 @@ function setLeaderboardHandler(){
     $('#game-time').hide();
     getAllUsers(function(users){
       console.log(users);
-      renderLeaderboard(users);
     });
   });
 }
@@ -540,14 +540,6 @@ function getAllUsers(callback) {
       callback(usersData);
     }
   });
-}
-
-function renderLeaderboard(users){
-  var source = $('#view-leaderboard-template').html();
-  var template = Handlebars.compile(source);
-  var compiled = template(users);
-  $('#view-leaderboard').empty();
-  $('#view-leaderboard').append(compiled).show();
 }
 
   // Wait until the DOM has loaded before querying the document
