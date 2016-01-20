@@ -3,6 +3,14 @@ var router = express.Router();
 var User = require('../models/user');
 var mongoose = require('mongoose');
 
+// Get All Users //
+
+router.get('/', function(req, res){
+  User.find({}, function(err, dbUsers){
+    res.json({users: dbUsers});
+  });
+});
+
 // Get Current User //
 
 router.get('/current', function(req, res){

@@ -444,6 +444,7 @@ function setLogOutHandler() {
 function renderHomeView(){
   $('#user-manager').show();
   $('#user-dashboard').hide();
+  $('.user-only').hide();
 
   $('#user-status').empty();
   var $welcome = $('<h5>').text('Welcome!');
@@ -453,9 +454,29 @@ function renderHomeView(){
 
 function setNewGameHandler() {
   $('body').on('click', '.new-game', function(){
+    $('#view-stats').hide();
+    $('#game-time').show();
     getGame();
     renderTvListener();
   });
+}
+
+function setViewStatsHandler(){
+  $('body').on('click', '.view-stats', function(){
+    getCurrentUser(function(userData){
+      var user = userData.user;
+      renderUserStats(user);
+    });
+  });
+}
+
+function renderUserStats(user) {
+  var source = $('#view-stats-template').html();
+  var template = Handlebars.compile(source);
+  var compiled = template(user);
+  $('#view-stats').empty();
+  $('#view-stats').append(compiled);
+  $('#view-stats').show();
 }
 
   // Wait until the DOM has loaded before querying the document
@@ -465,4 +486,5 @@ $(function(){
   setLogInFormHandler();
   setLogOutHandler();
   setNewGameHandler();
+  setViewStatsHandler();
 });

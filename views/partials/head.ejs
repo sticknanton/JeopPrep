@@ -7,6 +7,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js" charset="utf-8"></script>
 <script src="/js/scripts.js"></script>
+
+<%# Templates%>
+
+<%# Render Game%>
 <script type="text/x-handlebars-template" id="game-template">
   <label class="headTop">Cash Money $</label><label class="this-game">{{score}}</label>
   <div class="game">
@@ -23,5 +27,33 @@
 
       {{/each}}
 
+  </div>
+</script>
+
+<%# View Stats%>
+
+<script type="text/x-handlebars-template" id="view-stats-template">
+  <div class="row">
+    <div class="four columns">
+      <h5>Correct Answers</h5>
+      <h5>{{correct}}</h5>
+    </div>
+    <div class="four columns">
+      <h5>Questions Answered</h5>
+      <h5>{{answered}}</h5>
+    </div>
+    <div class="four columns">
+      <h5>% Correct</h5>
+    </div>
+  </div>
+  <div class="row">
+    <div class="offset-by-two four columns">
+      <h5>Single Game Hi Score</h5>
+      <h5>{{highScore}}</h5>
+    </div>
+    <div class="four columns">
+      <h5>Total Cash</h5>
+      <h5>${{totalCash}}</h5>
+    </div>
   </div>
 </script>
