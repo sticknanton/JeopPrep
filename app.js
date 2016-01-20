@@ -18,8 +18,8 @@ app.set('view engine', 'ejs');
 
 var mongoPath = 'mongodb://localhost/jepquestions';
 var mongoose = require('mongoose');
-mongoose.connect(mongoPath);
-
+mongoose.connect(process.env.MONGOLAB_URI||mongoPath);
+mongodb://heroku_cxw62ql5:bbhqi8k0d0ghnk2nbfvn5dnri6@ds047355.mongolab.com:47355/heroku_cxw62ql5
 // CUSTOM MIDDLEWARE //
 
 var loadUser = require('./middleware/loadUser');
@@ -39,6 +39,6 @@ app.use('/api/clues', clues);
 // LISTEN //
 
 var port = 8080;
-app.listen(port, function(){
+app.listen(process.env.PORT || port, function(){
   console.log('...listening on ' + port);
 });

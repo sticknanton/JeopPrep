@@ -440,9 +440,9 @@ function renderHomeView(){
     setLogInFormHandler();
     setLogOutHandler();
 
-    getGame();
-    renderTvListener();
-    renderAnswerListener();
+    // getGame();
+    // renderTvListener();
+    // renderAnswerListener();
 
 
 

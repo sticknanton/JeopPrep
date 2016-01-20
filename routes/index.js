@@ -6,7 +6,7 @@ var db = mongoose.connection;
 
 
 router.get('/', function (req, res) {
-console.log(db);
+// console.log(db);
   res.render('index', {title: "Jeopardy Machine"});
 });
 
