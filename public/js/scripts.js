@@ -216,6 +216,7 @@ function renderTvListener() {
 function submitAnswer(worth) {
   getCurrentUser(function (data) {
     var user = data.user;
+
     clearTimeout(timeout);
     console.log($('form#answer').data("answer"));
     var answer = $('form#answer').find("input[name='answer']").val();
@@ -259,10 +260,10 @@ function submitAnswer(worth) {
       })
     })
 }
-function renderAnswerListener(worth) {
+function renderAnswerListener() {
   $('form#answer').on('submit', function(e) {
     e.preventDefault();
-    submitAnswer(worth);
+    submitAnswer();
   });
 }
 
@@ -403,13 +404,12 @@ function logInUser(usernameAttempt, passwordAttempt, callback){
 
 function updateView(){
   if ( $.cookie('token') ) {
-    console.log('token set');
     $('#user-manager').hide();
+    $('#user-dashboard').show();
     getCurrentUser(function(userData){
-      renderDashboard(userData);
+      renderUserHeader(userData);
     });
   } else {
-    console.log('no token');
     renderHomeView();
   }
 }
@@ -417,17 +417,17 @@ function updateView(){
 function getCurrentUser(callback) {
   $.ajax({
     method: 'get',
-    url: '/api/users',
+    url: '/api/users/current',
     success: function(data){
       callback(data);
     }
   });
 }
 
-function renderDashboard(userData){
+function renderUserHeader(userData){
   var user = userData.user;
   $('#user-status').empty();
-  var $userMsg = $('<h5>').text('Welcome, ' + user.username + ' !');
+  var $userMsg = $('<h5>').text('Welcome, ' + user.username + '!');
   var $logout = $('<button>').attr({class: 'button-primary', id: 'logout'}).text('Log Out');
   $('#user-status').append([$userMsg, $logout]);
 }
@@ -441,6 +441,7 @@ function setLogOutHandler() {
 
 function renderHomeView(){
   $('#user-manager').show();
+  $('#user-dashboard').hide();
 
   $('#user-status').empty();
   var $welcome = $('<h5>').text('Welcome!');
@@ -452,7 +453,6 @@ function setNewGameHandler() {
   $('body').on('click', '.new-game', function(){
     getGame();
     renderTvListener();
-
   });
 }
 

@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 
 // Get Current User //
 
-router.get('/', function(req, res){
+router.get('/current', function(req, res){
   if (req.user) {
     res.json( { user: req.user } );
   } else {
