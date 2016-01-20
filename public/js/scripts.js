@@ -104,6 +104,7 @@ return ("0" + (secs - Math.round( 60))).substr(-2);
 
 
 function isTheGameOver() {
+<<<<<<< 71cffe931543a93f6cad7722fd135298bfb1e967
   if ($("div.clue")[0]){
     console.log('keep going');
   }
@@ -129,6 +130,9 @@ function isTheGameOver() {
 
     })
   }
+=======
+
+>>>>>>> Basic leaderboard rendering
 };
 
 
@@ -529,6 +533,7 @@ function setLeaderboardHandler(){
     $('#game-time').hide();
     getAllUsers(function(users){
       console.log(users);
+      renderLeaderboard(users);
     });
   });
 }
@@ -541,6 +546,14 @@ function getAllUsers(callback) {
       callback(usersData);
     }
   });
+}
+
+function renderLeaderboard(users){
+  var source = $('#view-leaderboard-template').html();
+  var template = Handlebars.compile(source);
+  var compiled = template(users);
+  $('#view-leaderboard').empty();
+  $('#view-leaderboard').append(compiled).show();
 }
 
   // Wait until the DOM has loaded before querying the document

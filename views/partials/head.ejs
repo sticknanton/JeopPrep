@@ -57,3 +57,41 @@
     </div>
   </div>
 </script>
+
+<%# View Leaderboard%>
+
+<script type="text/x-handlebars-template" id="view-leaderboard-template">
+
+  <div class="row">
+    <div class="offset-by-three six columns">
+      <h3>Leaderboard</h3>
+    </div>
+  </div>
+
+  <!-- Column Heads -->
+  <div class="row">
+    <div class="offset-by-one four columns">
+      <h5>Player</h5>
+    </div>
+    <div class="three columns">
+      <h5>Correct Answers</h5>
+    </div>
+    <div class="three columns">
+      <h5>Single Game Hi Score</h5>
+    </div>
+  </div>
+  <!-- Row for each user -->
+  {{#each users}}
+    <div class="row">
+      <div class="offset-by-one four columns">
+        <h5>{{this.username}}</h5>
+      </div>
+      <div class="three columns">
+        <h5>{{this.correct}}</h5>
+      </div>
+      <div class="three columns">
+        <h5>{{this.highScore}}</h5>
+      </div>
+    </div>
+  {{/each}}
+</script>

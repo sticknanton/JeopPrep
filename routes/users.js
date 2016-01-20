@@ -30,6 +30,7 @@ router.post('/', function(req, res){  // POST request to /api/users
 
 // Whenever user answers question, update stats
 router.patch('/', function(req, res){  // PATCH request to /api/users
+<<<<<<< 71cffe931543a93f6cad7722fd135298bfb1e967
   if(req.user){    // IF a user has been found via token
     if(req.body.highScore){
       req.user.highScore = req.body.highScore;
@@ -40,6 +41,13 @@ router.patch('/', function(req, res){  // PATCH request to /api/users
         req.user.correct+=1;
         req.user.totalCash+=parseInt(req.body.worth);  //user.correct should equal 0 or 1
       }
+=======
+  if (req.user) {  // IF a user has been found via token
+    req.user.answered+=1; // No matter what, add to total questions answered
+    if (req.body.correct) {
+      req.user.correct+=1;
+      req.user.totalCash+=parseInt(req.body.worth);  //user.correct should equal 0 or 1
+>>>>>>> Basic leaderboard rendering
     }
     req.user.save(function(err, dbUser){  // Save the user with updated stats
       res.json(dbUser); // Send the updated user as JSON
