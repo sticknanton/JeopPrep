@@ -104,7 +104,11 @@ return ("0" + (secs - Math.round( 60))).substr(-2);
 
 
 function isTheGameOver() {
-  
+  var hasClues = $('body').find('.clue');
+  if(hasClues){
+    console.log('keep going');
+    return;
+  }
 };
 
 
