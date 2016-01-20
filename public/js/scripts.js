@@ -118,6 +118,7 @@ function newHighScore(score) {
 }
 
 function isTheGameOver() {
+
   if ($("div.clue")[0]){
     console.log('keep going');
   }
@@ -137,7 +138,13 @@ function isTheGameOver() {
 
   }
 
+
 };
+
+
+
+
+
 
 
 
