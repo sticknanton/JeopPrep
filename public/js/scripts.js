@@ -475,6 +475,8 @@ function setNewGameHandler() {
   });
 }
 
+// VIEW STATS //
+
 function setViewStatsHandler(){
   $('body').on('click', '.view-stats', function(){
     getCurrentUser(function(userData){
@@ -494,12 +496,36 @@ function renderUserStats(user) {
   $('#view-stats').show();
 }
 
+// LEADERBOARD //
+
+function setLeaderboardHandler(){
+  $('body').on('click', '.leaderboard', function(){
+    $('#view-stats').hide();
+    $('#game-time').hide();
+    getAllUsers(function(users){
+      console.log(users);
+    });
+  });
+}
+
+function getAllUsers(callback) {
+  $.ajax({
+    method: 'get',
+    url: '/api/users',
+    success: function(usersData){
+      callback(usersData);
+    }
+  });
+}
+
   // Wait until the DOM has loaded before querying the document
 $(function(){
   updateView();
   setSignUpFormHandler();
   setLogInFormHandler();
   setLogOutHandler();
+
   setNewGameHandler();
   setViewStatsHandler();
+  setLeaderboardHandler();
 });
