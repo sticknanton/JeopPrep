@@ -244,7 +244,7 @@ function submitAnswer(worth) {
         correct = true;
         $('.challenge').hide();
         $('.challenge').removeClass('challenge');
-        $('.message').text("Sorry abotu that we\'ll mark that as right")
+        $('.message').text("Sorry about that we\'ll mark that as right")
       })
 
       $('.exit').on('click', function () {
@@ -259,8 +259,10 @@ function submitAnswer(worth) {
         modal.close();
       })
     })
+
 }
-function renderAnswerListener() {
+
+function renderAnswerListener(worth) {
   $('form#answer').on('submit', function(e) {
     e.preventDefault();
     submitAnswer();
