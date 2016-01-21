@@ -554,9 +554,14 @@ function getAllUsers(callback) {
     method: 'get',
     url: '/api/users',
     success: function(usersData){
+      var sortedUsers = sortUsers(usersData);
       callback(usersData);
     }
   });
+}
+
+function sortUsers(usersData) {
+  
 }
 
 function renderLeaderboard(users){
