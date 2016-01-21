@@ -91,16 +91,31 @@ function Decrement(user, worth) {
 
 
 
+function getAJoke(callback) {
+
+$.ajax({
+   method: 'get',
+   url: 'http://api.icndb.com/jokes/random',
+   success: function(data){
+     callback(data)
+    //console.log(data.value.joke);
+   }
+ });
+}
 
 
 
 
-
-
-
-
-
-
+function newHighScore(score) {
+  $.ajax({
+    method: 'patch',
+    url: 'api/users',
+    data: {highScore: score},
+    success: function (data) {
+      $('body').append($('<h1 class="high-score">').text('CONGRATS ON YOUR NEW HIGH SCORE!'));
+    }
+  });
+}
 
 function isTheGameOver() {
   if ($("div.clue")[0]){
@@ -116,16 +131,10 @@ function isTheGameOver() {
       $('body').append($('<h2 class="final-score">').text('Your score for this game was $'+score));
       if(user.highScore<score)
       {
-        $.ajax({
-          method: 'patch',
-          url: 'api/users',
-          data: {highScore: score},
-          success: function (data) {
-            $('body').append($('<h1 class="high-score">').text('CONGRATS ON YOUR NEW HIGH SCORE!'));
-          }
-        });
+        newHighScore(score);
       }
     });
+
   }
 
 };
@@ -142,9 +151,13 @@ function renderJeopardy(data) {
         templateData.clue.push(clue);
       }
     })
+
     templateData = sortMyCats(templateData);
     var compiledHtml = template(templateData);
     $('#game-time').html(compiledHtml);
+    getAJoke(function (data) {
+      $('.joke').append($('<h3 id="joke">').html(data.value.joke));
+    });
 }
 
 
@@ -239,51 +252,51 @@ function renderTvListener(user) {
   })
 }
 function submitAnswer(user,worth) {
-    clearTimeout(timeout);
-    var answer = $('form#answer').find("input[name='answer']").val();
-    var rightAnswer = $('form#answer').data("answer");
-    console.log(answer);
-    console.log(rightAnswer);
-    var correct ="false";
-    var length = rightAnswer.length;
+clearTimeout(timeout);
+var answer = $('form#answer').find("input[name='answer']").val();
+var rightAnswer = $('form#answer').data("answer");
+console.log(answer);
+console.log(rightAnswer);
+var correct ="false";
+var length = rightAnswer.length;
+modal.close();
+modal.open({ width: "30%"});
+  if (levenshtein(answer, rightAnswer)<=Math.ceil(length*0.2)) {
+    correct = "true";
+    $("#content").html("<h3>NICE ONE!</h3><button class='exit'>Click to continue.</button>")
+  }else {
+
+    $("#content").html("<h3 class='message'>Sorry!</h3><p>The correct answer was <strong>" + rightAnswer + "</strong></p><button class='exit'>Click to continue.</button><button class='challenge'>Click to challenge.</button>")
+    correct = "false";
+
+  }
+  $('button.challenge').show();
+  $("form#answer").hide();
+  $("#seconds").hide();
+  modal.center();
+
+
+  $('.challenge').on('click', function () {
+    correct = "true";
+    $('.challenge').hide();
+    $('.challenge').removeClass('challenge');
+    $('.message').text("Sorry about that we\'ll mark that as right")
+  })
+
+  $('.exit').on('click', function () {
+    $('.exit').removeClass('exit');
+    if (correct=="true") {
+        $('.this-game').text( (parseInt($('.this-game').text()) + parseInt(worth)) );
+    }
+    var addThis = parseInt(worth);
+    updateUser(correct, addThis, function (updatedUser) {
+      user = updatedUser;
+    });
+
     modal.close();
-    modal.open({ width: "30%"});
-      if (levenshtein(answer, rightAnswer)<=Math.ceil(length*0.2)) {
-        correct = "true";
-        $("#content").html("<h3>NICE ONE!</h3><button class='exit'>Click to continue.</button>")
-      }else {
-
-        $("#content").html("<h3 class='message'>Sorry!</h3><p>The correct answer was <strong>" + rightAnswer + "</strong></p><button class='exit'>Click to continue.</button><button class='challenge'>Click to challenge.</button>")
-        correct = "false";
-
-      }
-      $('button.challenge').show();
-      $("form#answer").hide();
-      $("#seconds").hide();
-      modal.center();
-
-
-      $('.challenge').on('click', function () {
-        correct = "true";
-        $('.challenge').hide();
-        $('.challenge').removeClass('challenge');
-        $('.message').text("Sorry about that we\'ll mark that as right")
-      })
-
-      $('.exit').on('click', function () {
-        $('.exit').removeClass('exit');
-        if (correct=="true") {
-            $('.this-game').text( (parseInt($('.this-game').text()) + parseInt(worth)) );
-        }
-        var addThis = parseInt(worth);
-        updateUser(correct, addThis, function (updatedUser) {
-          user = updatedUser;
-        });
-
-        modal.close();
-        $("form#answer").find('input[type=text]').val('');
-        isTheGameOver();
-      })
+    $("form#answer").find('input[type=text]').val('');
+    isTheGameOver();
+  })
 }
 
 function renderAnswerListener(user,worth) {

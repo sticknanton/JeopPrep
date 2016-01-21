@@ -106,7 +106,7 @@ font-size: 30px;
   font-weight: bold;
   margin-left: 50%;
 }
-.headTop,.this-game,.high-score,.final-score{
+.headTop,.this-game,.high-score,.final-score,#joke{
 text-align: center;
 color: white;
 }
