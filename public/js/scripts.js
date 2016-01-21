@@ -93,10 +93,16 @@ function isTheGameOver() {
       $('.game').empty();
       $('.game').hide();
       $('body').append($('<h2 class="final-score">').text('Your score for this game was $'+score));
+      $('body').append($('<div id=redo>').append($('<button class="redo" type="submit">').text("Play Again?")));
+
       if(user.highScore<score)
       {
         newHighScore(score);
       }
+      $('body').on('click', '.redo', function(e) {
+        e.preventDefault();
+        location.reload();
+      })
     });
   }
 };
