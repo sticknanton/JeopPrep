@@ -363,7 +363,6 @@ function setLogInFormHandler(){
     logInUser(usernameText, passwordText, function(data){
 
       $.cookie('token', data.token);
-      console.log(data);
       updateView();
     });
   });
@@ -418,10 +417,9 @@ function getCurrentUser(callback) {
 
 function renderUserHeader(userData){
   var user = userData.user;
-  $('#user-status').empty();
+  $('#welcome-msg').empty();
   var $userMsg = $('<h5>').text('Welcome, ' + user.username + '!');
-  var $logout = $('<button>').attr({class: 'button-primary', id: 'logout'}).text('Log Out');
-  $('#user-status').append([$userMsg, $logout]);
+  $('#welcome-msg').append($userMsg);
 }
 
 function setLogOutHandler() {
@@ -435,11 +433,11 @@ function renderHomeView(){
   $('#user-manager').show();
   $('#user-dashboard').hide();
   $('.user-only').hide();
-
-  $('#user-status').empty();
+  
+  $('#welcome-msg').empty();
   var $welcome = $('<h5>').text('Welcome!');
   var $msg = $('<h6>').text('Please Log In to Play');
-  $('#user-status').append([$welcome, $msg]);
+  $('#welcome-msg').append([$welcome, $msg]);
 }
 
 function setNewGameHandler() {
