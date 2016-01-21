@@ -486,6 +486,7 @@ function setViewStatsHandler(){
     getCurrentUser(function(userData){
       var user = userData.user;
       renderUserStats(user);
+      $('#view-leaderboard').hide();
     });
   });
 }
@@ -510,6 +511,7 @@ function setLeaderboardHandler(){
   $('body').on('click', '.leaderboard', function(){
     getAllUsers(function(users){
       renderLeaderboard(users);
+      $('#view-stats').hide();
     });
   });
 }

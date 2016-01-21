@@ -83,10 +83,18 @@ h6{
   border-color: #0560c2;
 }
 #view-stats {
+  background-color: rgba(175, 198, 224, 0.1);
   display: none;
 }
 #view-leaderboard {
+  background-color: rgba(175, 198, 224, 0.1);
   display: none;
+}
+#view-stats h5,
+#view-stats h6,
+#view-leaderboard h5,
+#view-leaderboard h6 {
+  color: #a4c6e9;
 }
 .dashboard-row {
   margin: 35px 0;
