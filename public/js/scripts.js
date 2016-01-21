@@ -185,10 +185,10 @@ function renderTvListener(user) {
     clue.removeClass('clue');
     clue.addClass('finishedClue');
     var worth = clue.find(".value").text();
-    modal.open({ value: clue.find(".answer").text(), width: "100%"});
-    $("#content").html("<h3>"+clue.find(".question").text()+"</h3>")
     $("form#answer").show();
     $("#blank").show();
+    modal.open({ value: clue.find(".answer").text(), width: "100%"});
+    $("#content").html("<h3>"+clue.find(".question").text()+"</h3>")
     countdown(user, worth);
     clue.empty();
     modal.center();
@@ -309,7 +309,7 @@ var modal = (function(){
   $form = $('<form id="answer">');
   $span = $('<span id="seconds">');
   $helper = $('<div id="blank">You can leave a question blank to skip it.</div>')
-  $form.append($('<input type="text" name="answer" autofocus="autofocus" placeholder="Answer">'))
+  $form.append($('<input autofocus type="text" name="answer" placeholder="Answer">'))
   $form.append($('<input class="submit-answer" type="submit" value="Submit">'))
 
 	$modal.hide();
