@@ -37,22 +37,24 @@ h5{
   font-family: 'Audiowide';
   color:#228DFF;
 }
-h5#welcome{
-  text-align: left;
-}
 h6{
   font-family: 'Audiowide';
   color:#228DFF;
 }
-
-
+#welcome-msg h5,
+#welcome-msg h6 {
+  text-align: left;
+  padding: 10px 0 0 10px;
+}
 .header {
   background-color: rgba(175, 198, 224, 0.1);
   padding: 0;
 }
 
 .title {
-  text-align: center;
+  text-align: left;
+  margin-left: -60px;
+  padding-top: 40px;
 }
 #signup-success-box {
   text-align: center;
@@ -65,12 +67,10 @@ h6{
   color: #228DFF;
   background-color: rgba(175, 198, 224, 0.1);
 }
-#user-dashboard {
-  text-align: center;
-}
 #user-dashboard button {
-  font-size: .8em;
-  width: 80%;
+  margin-left: 30px;
+  font-size: .6em;
+  width: 55%;
 }
 #view-stats {
   display: none;
@@ -234,6 +234,7 @@ form#answer{
 }
 
 #user-status{
+  padding-left: 10px;
   color: white;
 }
 
@@ -288,7 +289,7 @@ a {
 /**colors and text**/
 p:nth-child(1) a {
   text-align: center;
-  font-size: 7em;
+  font-size: 6em;
   margin: 20px 0 20px 0;
   color: #228DFF;
   font-family:  Audiowide;

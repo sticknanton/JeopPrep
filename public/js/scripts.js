@@ -447,7 +447,7 @@ function setNewGameHandler() {
     $('.new-game').hide();
     getGame();
     getCurrentUser( function (data) {
-      renderTvListener(data.user)
+      renderTvListener(data.user);
     });
   });
 }
