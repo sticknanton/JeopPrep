@@ -188,6 +188,7 @@ function renderTvListener(user) {
     modal.open({ value: clue.find(".answer").text(), width: "100%"});
     $("#content").html("<h3>"+clue.find(".question").text()+"</h3>")
     $("form#answer").show();
+    $("#blank").show();
     countdown(user, worth);
     clue.empty();
     modal.center();
@@ -198,47 +199,64 @@ function renderTvListener(user) {
 function submitAnswer(user,worth) {
   clearTimeout(timeout);
   var answer = $('form#answer').find("input[name='answer']").val();
-  var rightAnswer = $('form#answer').data("answer");
-  var correct ="false";
-  var length = rightAnswer.length;
-  modal.close();
-  modal.open({ width: "30%"});
-  if (levenshtein(answer, rightAnswer)<=Math.ceil(length*0.2)) {
-    correct = "true";
-    $("#content").html("<h3>NICE ONE!</h3><button class='exit'>Click to continue.</button>")
-  }else {
-    $("#content").html("<h3 class='message'>Sorry!</h3><p>The correct answer was <strong>" + rightAnswer + "</strong></p><button class='exit'>Click to continue.</button><button class='challenge'>Click to challenge.</button>")
-    correct = "false";
-  }
-
-  $('button.challenge').show();
-  $("form#answer").hide();
-  $("#seconds").hide();
-  modal.center();
-
-  $('.challenge').on('click', function () {
-    correct = "true";
-    $('.challenge').hide();
-    $('.challenge').removeClass('challenge');
-    $('.message').text("Sorry about that we\'ll mark that as right")
-  })
-
-  $('.exit').on('click', function () {
-    $('.exit').removeClass('exit');
-    if (correct=="true") {
-      $('.this-game').text( (parseInt($('.this-game').text()) + parseInt(worth)) );
-    }
-    else if (correct=="false") {
-      $('.this-game').text( (parseInt($('.this-game').text()) - parseInt(worth)) );
-    }
-    var addThis = parseInt(worth);
-    updateUser(correct, addThis, function (updatedUser) {
-      user = updatedUser;
-    });
+  if(answer){
+    var rightAnswer = $('form#answer').data("answer");
+    var correct ="false";
+    var length = rightAnswer.length;
     modal.close();
-    $("form#answer").find('input[type=text]').val('');
-    isTheGameOver();
-  })
+    $("#blank").hide();
+    modal.open({ width: "30%"});
+    if (levenshtein(answer, rightAnswer)<=Math.ceil(length*0.2)) {
+      correct = "true";
+      $("#content").html("<h3>NICE ONE!</h3><button class='exit'>Click to continue.</button>")
+    }else {
+      $("#content").html("<h3 class='message'>Sorry!</h3><p>The correct answer was <strong>" + rightAnswer + "</strong></p><button class='exit'>Click to continue.</button><button class='challenge'>Click to challenge.</button>")
+      correct = "false";
+    }
+
+    $('button.challenge').show();
+    $("form#answer").hide();
+    $("#seconds").hide();
+    modal.center();
+
+    $('.challenge').on('click', function () {
+      correct = "true";
+      $('.challenge').hide();
+      $('.challenge').removeClass('challenge');
+      $('.message').text("Sorry about that we\'ll mark that as right")
+    })
+
+    $('.exit').on('click', function () {
+      $('.exit').removeClass('exit');
+      if (correct=="true") {
+        $('.this-game').text( (parseInt($('.this-game').text()) + parseInt(worth)) );
+      }
+      else if (correct=="false") {
+        $('.this-game').text( (parseInt($('.this-game').text()) - parseInt(worth)) );
+      }
+      var addThis = parseInt(worth);
+      updateUser(correct, addThis, function (updatedUser) {
+        user = updatedUser;
+      });
+      modal.close();
+      $("form#answer").find('input[type=text]').val('');
+      isTheGameOver();
+    })
+  }
+  else{
+    modal.close();
+    $("#blank").hide();
+    modal.open({ width: "30%"});
+    $("#content").html("<h3>Question Skipped.</h3><button class='exit'>Click to continue.</button>")
+    $('.exit').on('click', function () {
+      $('.exit').removeClass('exit');
+      modal.close();
+      $("form#answer").find('input[type=text]').val('');
+      $("form#answer").hide();
+      $("#seconds").hide();
+      isTheGameOver();
+    })
+  }
 }
 
 function renderAnswerListener(user,worth) {
@@ -290,14 +308,13 @@ var modal = (function(){
 	$content = $('<div id="content"></div>');
   $form = $('<form id="answer">');
   $span = $('<span id="seconds">');
-
+  $helper = $('<div id="blank">You can leave a question blank to skip it.</div>')
   $form.append($('<input type="text" name="answer" autofocus="autofocus" placeholder="Answer">'))
   $form.append($('<input class="submit-answer" type="submit" value="Submit">'))
 
 	$modal.hide();
 	$overlay.hide();
-	$modal.append($content, $close, $form, $span);
-
+	$modal.append($helper, $content, $close, $form, $span);
   $(document).ready(function(){
 
     $('body').append($overlay, $modal);

@@ -145,7 +145,7 @@ font-size: 30px;
   font-weight: bold;
   margin-left: 50%;
 }
-.this-game,.high-score,.final-score,#joke{
+.this-game,.high-score,.final-score,#joke,#blank{
 text-align: center;
 color: white;
 font-family: 'Audiowide';
@@ -209,6 +209,7 @@ form#answer{
    background-color: white;
    color: black;
  }
+
 
 
 /*********TITTLE GLOW AND FONT**********/
