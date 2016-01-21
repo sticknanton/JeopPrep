@@ -123,12 +123,11 @@ function getGame(){
     method: 'get',
     url: '/api/clues',
     success: function(data){
-      if (data.length != 60){ // Sometimes Clue.find by random show number returns an empty array, so request again if that happens...
+      if (data.length != 60) { // Sometimes Clue.find by random show number returns an empty array, so request again if that happens...
         getGame();
-      }else{
-      console.log(data);
+      } else {
       renderJeopardy(data);
-    }
+      }
     }
   });
 }
@@ -307,6 +306,20 @@ var modal = (function(){
 	return method;
 }());
 
+function updateUser(correct, worth, callback) {
+  $.ajax({
+    method: 'patch',
+    url: 'api/users',
+    data: {correct: correct, worth: worth},
+    success: function (data) {
+      callback(data);
+    }
+  });
+}
+
+// ~~~ USER CREATE / LOGIN ~~~ //
+
+  // ~ USER CREATION ~~ //
 
 function setSignUpFormHandler() {
   $('form#sign-up-form').on('submit', function(e){
@@ -346,6 +359,8 @@ function createUser(userData, callback, user) {
   });
 }
 
+  // ~~ LOG IN ~~ //
+
 function setLogInFormHandler(){
   $('form#log-in-form').on('submit', function(e){
     e.preventDefault();
@@ -361,22 +376,17 @@ function setLogInFormHandler(){
     var userData = {username: usernameText, password: passwordText};
 
     logInUser(usernameText, passwordText, function(data){
-
+      if (data.description === 'invalid'){
+        $('.login-error').show();
+      } else {
+        $('.login-error').hide();
+      }
       $.cookie('token', data.token);
       updateView();
     });
   });
 }
-function updateUser(correct, worth, callback) {
-  $.ajax({
-    method: 'patch',
-    url: 'api/users',
-    data: {correct: correct, worth: worth},
-    success: function (data) {
-      callback(data);
-    }
-  });
-}
+
 function logInUser(usernameAttempt, passwordAttempt, callback){
   $.ajax({
     method: 'post',
@@ -425,7 +435,6 @@ function renderUserHeader(userData){
 function setLogOutHandler() {
   $('body').on('click', '#logout', function(){
     $.removeCookie('token');
-    location.reload();
     updateView();
   });
 }

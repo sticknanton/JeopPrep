@@ -67,6 +67,10 @@ h6{
   color: #228DFF;
   background-color: rgba(175, 198, 224, 0.1);
 }
+
+.login-error {
+  display: none;
+}
 #user-dashboard button {
   margin-left: 30px;
   font-size: .6em;
