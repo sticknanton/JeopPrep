@@ -1,12 +1,9 @@
 console.log('hello is it me you\'r looking for');
-function renderDoubleJeopardy(data) {
-
-}
-//Nick is working here
+function renderDoubleJeopardy(data) {}//call me maybe
 
 var secs;
 var timeout;
-
+//sorting the clues to align correctly
 function sortMyCats(data) {
   var cats = [];
   var length = data.clue.length;
@@ -47,7 +44,6 @@ function sortMyCats(data) {
 }
 
 function countdown(user, worth) {
-  // timeout = setTimeout('Decrement()', 1000);
   timeout = setTimeout(function(){ Decrement(user, worth) }, 1000);
 }
 
@@ -62,49 +58,17 @@ function Decrement(user, worth) {
   }else {
   countdown(user, worth);
   }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function getAJoke(callback) {
-
-$.ajax({
-   method: 'get',
-   url: 'http://api.icndb.com/jokes/random',
-   success: function(data){
-     callback(data)
-    //console.log(data.value.joke);
-   }
- });
+  $.ajax({
+    method: 'get',
+    url: 'http://api.icndb.com/jokes/random',
+    success: function(data){
+      callback(data)
+    }
+  });
 }
-
-
-
 
 function newHighScore(score) {
   $.ajax({
@@ -118,7 +82,6 @@ function newHighScore(score) {
 }
 
 function isTheGameOver() {
-
   if ($("div.clue")[0]){
     console.log('keep going');
   }
@@ -135,20 +98,9 @@ function isTheGameOver() {
         newHighScore(score);
       }
     });
-
   }
-
-
 };
 
-
-
-
-
-
-
-
-// Work here
 function renderJeopardy(data) {
   var source = $('#game-template').html();
     var template = Handlebars.compile(source);
@@ -158,7 +110,6 @@ function renderJeopardy(data) {
         templateData.clue.push(clue);
       }
     })
-
     templateData = sortMyCats(templateData);
     var compiledHtml = template(templateData);
     $('#game-time').html(compiledHtml);
@@ -167,20 +118,6 @@ function renderJeopardy(data) {
     });
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//more space
 function getGame(){
   $.ajax({
     method: 'get',
@@ -244,44 +181,41 @@ function levenshtein(str1, str2) {
 function renderTvListener(user) {
   $('body').on('click', '.clue', function (e) {
     e.preventDefault();
+    secs = 15;
     clue = $(this);
     clue.removeClass('clue');
     clue.addClass('finishedClue');
+    var worth = clue.find(".value").text();
     modal.open({ value: clue.find(".answer").text(), width: "100%"});
-    secs = 15;
     $("#content").html("<h3>"+clue.find(".question").text()+"</h3>")
     $("form#answer").show();
-    var worth = clue.find(".value").text();
     countdown(user, worth);
     clue.empty();
     modal.center();
     renderAnswerListener(user,worth);
   })
 }
+
 function submitAnswer(user,worth) {
-clearTimeout(timeout);
-var answer = $('form#answer').find("input[name='answer']").val();
-var rightAnswer = $('form#answer').data("answer");
-console.log(answer);
-console.log(rightAnswer);
-var correct ="false";
-var length = rightAnswer.length;
-modal.close();
-modal.open({ width: "30%"});
+  clearTimeout(timeout);
+  var answer = $('form#answer').find("input[name='answer']").val();
+  var rightAnswer = $('form#answer').data("answer");
+  var correct ="false";
+  var length = rightAnswer.length;
+  modal.close();
+  modal.open({ width: "30%"});
   if (levenshtein(answer, rightAnswer)<=Math.ceil(length*0.2)) {
     correct = "true";
     $("#content").html("<h3>NICE ONE!</h3><button class='exit'>Click to continue.</button>")
   }else {
-
     $("#content").html("<h3 class='message'>Sorry!</h3><p>The correct answer was <strong>" + rightAnswer + "</strong></p><button class='exit'>Click to continue.</button><button class='challenge'>Click to challenge.</button>")
     correct = "false";
-
   }
+
   $('button.challenge').show();
   $("form#answer").hide();
   $("#seconds").hide();
   modal.center();
-
 
   $('.challenge').on('click', function () {
     correct = "true";
@@ -293,13 +227,12 @@ modal.open({ width: "30%"});
   $('.exit').on('click', function () {
     $('.exit').removeClass('exit');
     if (correct=="true") {
-        $('.this-game').text( (parseInt($('.this-game').text()) + parseInt(worth)) );
+      $('.this-game').text( (parseInt($('.this-game').text()) + parseInt(worth)) );
     }
     var addThis = parseInt(worth);
     updateUser(correct, addThis, function (updatedUser) {
       user = updatedUser;
     });
-
     modal.close();
     $("form#answer").find('input[type=text]').val('');
     isTheGameOver();
@@ -313,67 +246,64 @@ function renderAnswerListener(user,worth) {
   });
 }
 
+var modal = (function(){
+	var
+	method = {},
+	$overlay,
+	$modal,
+	$content,
+	$close;
 
+	method.center = function () {
+		var top, left;
+		top = Math.max($(window).height() - $modal.outerHeight(), 0) / 2;
+		left = Math.max($(window).width() - $modal.outerWidth(), 0) / 2;
+		$modal.css({
+			top:top + $(window).scrollTop(),
+			left:left + $(window).scrollLeft()
+		});
+	};
 
+	method.open = function (settings) {
+		$content.empty().append(settings.content);
+		$modal.css({
+			width: settings.width || 'auto',
+			height: settings.height || 'auto'
+		});
+    $modal.find('form#answer').data("answer",settings.value)
 
+		method.center();
+		$(window).bind('resize.modal', method.center);
+		$modal.show();
+		$overlay.show();
+	};
 
-	var modal = (function(){
-		var
-		method = {},
-		$overlay,
-		$modal,
-		$content,
-		$close;
-
-		method.center = function () {
-			var top, left;
-			top = Math.max($(window).height() - $modal.outerHeight(), 0) / 2;
-			left = Math.max($(window).width() - $modal.outerWidth(), 0) / 2;
-			$modal.css({
-				top:top + $(window).scrollTop(),
-				left:left + $(window).scrollLeft()
-			});
-		};
-
-		method.open = function (settings) {
-			$content.empty().append(settings.content);
-			$modal.css({
-				width: settings.width || 'auto',
-				height: settings.height || 'auto'
-			});
-      $modal.find('form#answer').data("answer",settings.value)
-
-			method.center();
-			$(window).bind('resize.modal', method.center);
-			$modal.show();
-			$overlay.show();
-		};
-
-		method.close = function () {
-			$modal.hide();
-			$overlay.hide();
-		};
-
-		$overlay = $('<div id="overlay"></div>');
-		$modal = $('<div id="modal"></div>');
-		$content = $('<div id="content"></div>');
-    $form = $('<form id="answer">');
-    $span = $('<span id="seconds">');
-      $form.append($('<input type="text" name="answer" placeholder="Answer">'))
-      $form.append($('<input type="submit" value="Submit">'))
-
+	method.close = function () {
 		$modal.hide();
 		$overlay.hide();
-		$modal.append($content, $close, $form, $span);
+	};
 
-    $(document).ready(function(){
+	$overlay = $('<div id="overlay"></div>');
+	$modal = $('<div id="modal"></div>');
+	$content = $('<div id="content"></div>');
+  $form = $('<form id="answer">');
+  $span = $('<span id="seconds">');
 
-      $('body').append($overlay, $modal);
+  $form.append($('<input type="text" name="answer" placeholder="Answer">'))
+  $form.append($('<input type="submit" value="Submit">'))
 
-    });
-		return method;
-	}());
-//Graig is working here
+	$modal.hide();
+	$overlay.hide();
+	$modal.append($content, $close, $form, $span);
+
+  $(document).ready(function(){
+
+    $('body').append($overlay, $modal);
+
+  });
+	return method;
+}());
+
 
 function setSignUpFormHandler() {
   $('form#sign-up-form').on('submit', function(e){
@@ -516,8 +446,7 @@ function setNewGameHandler() {
     getGame();
     getCurrentUser( function (data) {
       renderTvListener(data.user)
-    } );
-
+    });
   });
 }
 
