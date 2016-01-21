@@ -78,12 +78,10 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 12px;
   background-color: rgb(227, 223, 209);
   text-align: center;
+  overflow-y: hidden;
 
 }
-.finishedClue img, .clue img{
-  width: 120%;
-  height: 120%;
-}
+
 
 .question,.answer,.category{
   display: none;
@@ -153,39 +151,39 @@ color: white;
 
 
 
-			#overlay {
-				position:fixed;
-				top:0;
-				left:0;
-				width:100%;
-				height:100%;
-				background:#000;
-				opacity:0.5;
-				filter:alpha(opacity=50);
-			}
+#overlay {
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background:#000;
+	opacity:0.5;
+	filter:alpha(opacity=50);
+}
 
-			#modal {
-				position:absolute;
-				background:url(tint20.png) 0 0 repeat;
-				background:rgba(0,0,0,0.2);
-				border-radius:14px;
-				padding:8px;
-			}
+#modal {
+	position:absolute;
+	background:url(tint20.png) 0 0 repeat;
+	background:rgba(0,0,0,0.2);
+	border-radius:14px;
+	padding:8px;
+}
 
-			#content {
-				border-radius:8px;
-				background:#fff;
-				padding:20px;
-        text-align: center;
-        max-width: 95%;
-			}
-      #end{
-        text-align: center;
-      }
+#content {
+	border-radius:8px;
+	background:#fff;
+	padding:20px;
+  text-align: center;
+  max-width: 95%;
+}
+#end{
+  text-align: center;
+}
 
-      form#answer{
-        text-align: center;
-      }
+form#answer{
+  text-align: center;
+}
 
 #user-status{
   color: white;
