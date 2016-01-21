@@ -293,7 +293,7 @@ var modal = (function(){
   $span = $('<span id="seconds">');
 
   $form.append($('<input type="text" name="answer" placeholder="Answer">'))
-  $form.append($('<input type="submit" value="Submit">'))
+  $form.append($('<input class="submit-answer" type="submit" value="Submit">'))
 
 	$modal.hide();
 	$overlay.hide();
