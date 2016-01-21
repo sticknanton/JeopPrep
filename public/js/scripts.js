@@ -292,7 +292,7 @@ var modal = (function(){
   $form = $('<form id="answer">');
   $span = $('<span id="seconds">');
 
-  $form.append($('<input type="text" name="answer" placeholder="Answer">'))
+  $form.append($('<input type="text" name="answer" autofocus="autofocus" placeholder="Answer">'))
   $form.append($('<input class="submit-answer" type="submit" value="Submit">'))
 
 	$modal.hide();
