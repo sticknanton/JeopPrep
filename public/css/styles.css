@@ -15,32 +15,22 @@ h1, h2, h3, h4, h5, h6 {
   color: black;
 }
 
-h3.returnuser{
+h3.returnuser, h3.newuser, h3.leaderboard{
   font-family: 'Audiowide';
   color:#228DFF;
 }
-h3.newuser{
-  font-family: 'Audiowide';
-  color:#228DFF;
-}
+
 h3.leaderboard{
   text-align: center;
-  font-family: 'Audiowide';
-  color:#228DFF;
 }
-h4{
+h4, h5, h6{
   font-family: 'Audiowide';
   color:#228DFF;
 }
 h5{
   text-align: center;
-  font-family: 'Audiowide';
-  color:#228DFF;
 }
-h6{
-  font-family: 'Audiowide';
-  color:#228DFF;
-}
+
 #welcome-msg h5,
 #welcome-msg h6 {
   text-align: left;
@@ -216,11 +206,7 @@ height: 49px;
   text-align: center;
   max-width: 95%;
 }
-#end{
-  text-align: center;
-}
-
-form#answer{
+#end, form#answer{
   text-align: center;
 }
 
