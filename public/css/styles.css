@@ -49,6 +49,7 @@ h6{
 .header {
   background-color: rgba(175, 198, 224, 0.1);
   padding: 0;
+  margin-bottom: 10px;
 }
 
 .title {
@@ -116,7 +117,9 @@ h6{
   font-weight: 600;
   font-size: 16px;
 }
-
+.clue:hover{
+  cursor: pointer;
+}
 .finishedClue, .clue{
   width: 14%;
   height: 100px;
@@ -129,7 +132,6 @@ h6{
   background-color: rgb(227, 223, 209);
   text-align: center;
   overflow-y: hidden;
-
 }
 
 
@@ -142,6 +144,7 @@ list-style-type: none;
 .clue-details{
 margin-top: 20%;
 font-size: 30px;
+text-align: center;
 }
 
 li.value:hover{
