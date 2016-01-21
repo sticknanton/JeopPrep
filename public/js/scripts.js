@@ -246,14 +246,14 @@ function submitAnswer(user,worth) {
   else{
     modal.close();
     $("#blank").hide();
+    $("form#answer").hide();
+    $("#seconds").hide();
     modal.open({ width: "30%"});
     $("#content").html("<h3>Question Skipped.</h3><button class='exit'>Click to continue.</button>")
     $('.exit').on('click', function () {
       $('.exit').removeClass('exit');
       modal.close();
       $("form#answer").find('input[type=text]').val('');
-      $("form#answer").hide();
-      $("#seconds").hide();
       isTheGameOver();
     })
   }
