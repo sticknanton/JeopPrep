@@ -75,6 +75,12 @@ h6{
   margin-left: 30px;
   font-size: .6em;
   width: 55%;
+  background-color: #228DFF;
+  border-color: #228DFF;
+}
+#user-dashboard button:hover {
+  background-color: #0560c2;
+  border-color: #0560c2;
 }
 #view-stats {
   display: none;
