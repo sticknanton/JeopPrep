@@ -229,6 +229,9 @@ function submitAnswer(user,worth) {
     if (correct=="true") {
       $('.this-game').text( (parseInt($('.this-game').text()) + parseInt(worth)) );
     }
+    else if (correct=="false") {
+      $('.this-game').text( (parseInt($('.this-game').text()) - parseInt(worth)) );
+    }
     var addThis = parseInt(worth);
     updateUser(correct, addThis, function (updatedUser) {
       user = updatedUser;

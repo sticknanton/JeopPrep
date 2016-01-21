@@ -40,6 +40,9 @@ router.patch('/', function(req, res){  // PATCH request to /api/users
         req.user.correct+=1;
         req.user.totalCash+=parseInt(req.body.worth);  //user.correct should equal 0 or 1
       }
+      if(req.body.correct=="false"){
+        req.user.totalCash-=parseInt(req.body.worth);  //user.correct should equal 0 or 1
+      }
     }
     req.user.save(function(err, dbUser){  // Save the user with updated stats
       res.json(dbUser); // Send the updated user as JSON
