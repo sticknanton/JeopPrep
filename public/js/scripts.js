@@ -515,10 +515,15 @@ function setViewStatsHandler(){
 function renderUserStats(user) {
   var $viewStats = $('#view-stats').empty();
   var source = $('#view-stats-template').html();
+  Handlebars.registerHelper('percentCorrect', function(user){
+    var userRoot = user.data.root;
+    return Math.round((userRoot.correct / userRoot.answered) * 100);
+  });
   var template = Handlebars.compile(source);
   var compiled = template(user);
+
   $viewStats.append(compiled);
-  $viewStats.slideToggle(250, 'swing');
+  $viewStats.slideToggle(200, 'swing');
 }
 
 // LEADERBOARD //
@@ -548,7 +553,7 @@ function renderLeaderboard(users){
   var compiled = template(users);
 
   $leaderboard.append(compiled);
-  $leaderboard.slideToggle(250, 'swing');
+  $leaderboard.slideToggle(200, 'swing');
 
 }
 

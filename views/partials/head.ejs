@@ -49,12 +49,13 @@
     </div>
     <div class="four columns">
       <h5>% Correct</h5>
+      <h5>{{ percentCorrect }}%</h5>
     </div>
   </div>
   <div class="row">
     <div class="offset-by-two four columns">
       <h5>Single Game Hi Score</h5>
-      <h5>{{highScore}}</h5>
+      <h5>${{highScore}}</h5>
     </div>
     <div class="four columns">
       <h5>Total Cash</h5>
@@ -81,7 +82,7 @@
     <div class="three columns">
       <h5>Correct Answers</h5>
     </div>
-    <div class="three columns">
+    <div class="four columns">
       <h5>Single Game Hi Score</h5>
     </div>
   </div>
@@ -94,8 +95,8 @@
       <div class="three columns">
         <h5>{{this.correct}}</h5>
       </div>
-      <div class="three columns">
-        <h5>{{this.highScore}}</h5>
+      <div class="four columns">
+        <h5>${{this.highScore}}</h5>
       </div>
     </div>
   {{/each}}
