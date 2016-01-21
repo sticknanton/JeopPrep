@@ -199,8 +199,8 @@ function renderTvListener(user) {
 function submitAnswer(user,worth) {
   clearTimeout(timeout);
   var answer = $('form#answer').find("input[name='answer']").val();
+  var rightAnswer = $('form#answer').data("answer");
   if(answer){
-    var rightAnswer = $('form#answer').data("answer");
     var correct ="false";
     var length = rightAnswer.length;
     modal.close();
@@ -249,7 +249,7 @@ function submitAnswer(user,worth) {
     $("form#answer").hide();
     $("#seconds").hide();
     modal.open({ width: "30%"});
-    $("#content").html("<h3>Question Skipped.</h3><button class='exit'>Click to continue.</button>")
+    $("#content").html("<h3>Question Skipped.</h3><p>The correct answer was <strong>" + rightAnswer + "</strong></p><button class='exit'>Click to continue.</button>")
     $('.exit').on('click', function () {
       $('.exit').removeClass('exit');
       modal.close();
