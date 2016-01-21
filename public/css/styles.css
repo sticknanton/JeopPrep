@@ -3,7 +3,8 @@ body {
   margin: 0;
   padding: 0;
   background: (45deg, #2b2b2b 0%, #2b2b2b 10%, #222222 0%, #222222 50%) 0 / 15px 15px;
-
+  background-image: url('https://lh4.ggpht.com/LRAA7iL7Ja1cmWI9q32X4kRPMhcukMJX1hyMQ2o4y-rCwrII5lilDLcOB-ZIPy7yNAM=h900');
+  background-size: cover;
 }
 li{
   color: white;
@@ -14,7 +15,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .header {
-  background-color: rgb(175, 198, 224);
+  background-color: rgba(175, 198, 224, 0.1);
   padding: 20px;
 }
 
@@ -45,6 +46,19 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   margin-left: 7%;
 }
+.cat-name{
+  width: 12%;
+  display: inline-block;
+  padding: 1%;
+  margin: 0;
+  background-image: url('http://www.trestlewood.com/image/780a/29609/BlogDateBoard.png');
+  background-size: cover;
+  text-align: center;
+  background-repeat: no-repeat;
+  font-family: 'Gloria Hallelujah', cursive;
+  font-weight: 600;
+  font-size: 16px;
+}
 
 .finishedClue, .clue{
   width: 14%;
@@ -54,9 +68,9 @@ h1, h2, h3, h4, h5, h6 {
   background-size: cover;
   padding: 0;
   margin: 0;
-  overflow-y: hidden;
   font-size: 12px;
   background-color: rgb(227, 223, 209);
+  text-align: center;
 
 }
 .finishedClue img, .clue img{
@@ -64,22 +78,19 @@ h1, h2, h3, h4, h5, h6 {
   height: 120%;
 }
 
-.question,.answer{
+.question,.answer,.category{
   display: none;
 }
 ul{
 list-style-type: none;
 }
 .clue-details{
-  /*margin-left: -28px;
-  margin-top: 15px;
-  width: 70%;
-  text-align: center;*/
+margin-top: 20%;
+font-size: 30px;
 }
 
-.clue li, .finishedClue li {
-  margin: 10%;
-}
+
+
 
 #seconds{
   width: 60px;
@@ -90,12 +101,11 @@ list-style-type: none;
   font-weight: bold;
   margin-left: 50%;
 }
-.headTop,.this-game{
+.headTop,.this-game,.high-score,.final-score{
 text-align: center;
+color: white;
 }
-.high-score,.final-score{
-text-align: center;
-}
+
 
 
 
@@ -170,7 +180,9 @@ text-align: center;
         text-align: center;
       }
 
-
+#user-status{
+  color: white;
+}
 
 
 

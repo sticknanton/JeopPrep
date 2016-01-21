@@ -15,6 +15,7 @@ function sortMyCats(data) {
   while (cats.length < 6) {
     if ( $.inArray( data.clue[x].category, cats ) ==-1 ) {
       cats.push(data.clue[x].category);
+      data.category.push(data.clue[x].category)
     }
     x++
   }
@@ -135,7 +136,7 @@ function isTheGameOver() {
 function renderJeopardy(data) {
   var source = $('#game-template').html();
     var template = Handlebars.compile(source);
-    var templateData = { clue:[] , score:0}
+    var templateData = { clue:[] , score:0 , category:[]}
     data.forEach( function (clue) {
       if(clue.round == "Jeopardy!"){
         templateData.clue.push(clue);

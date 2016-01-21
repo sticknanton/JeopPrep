@@ -1,5 +1,6 @@
 <meta charset="utf-8">
 <title>JeopPrep</title>
+<link href='https://fonts.googleapis.com/css?family=Gloria+Hallelujah' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
 <link rel="stylesheet" href="/css/styles.css">
@@ -14,11 +15,15 @@
 <script type="text/x-handlebars-template" id="game-template">
   <label class="headTop">Cash Money</label><label class="this-game">{{score}}</label>
   <div class="game">
+    {{#each category}}
+    <div class="cat-name">
+      {{this}}
+    </div>
+    {{/each}}
       {{#each clue}}
-
       <div class="clue">
         <ul class="clue-details">
-          <li>{{ this.category }}</li>
+          <li class="category">{{ this.category }}</li>
           <li class="value">{{ this.value }}</li>
           <li class="question">{{ this.question  }}</li>
           <li class="answer">{{ this.answer  }}</li>
