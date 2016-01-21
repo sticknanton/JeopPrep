@@ -562,13 +562,23 @@ function getAllUsers(callback) {
     url: '/api/users',
     success: function(usersData){
       var sortedUsers = sortUsers(usersData);
-      callback(usersData);
+      callback(sortedUsers);
     }
   });
 }
 
 function sortUsers(usersData) {
-  
+  var usersToSort = usersData.users;
+  var sortedUsers = usersToSort.sort(function(a,b){
+    if (a.correct < b.correct) {
+      return 1;
+    }
+    if (b.correct > a.correct) {
+      return -1;
+    }
+    return 0;
+  });
+  return {users: sortedUsers};
 }
 
 function renderLeaderboard(users){
@@ -579,7 +589,6 @@ function renderLeaderboard(users){
 
   $leaderboard.append(compiled);
   $leaderboard.slideToggle(200, 'swing');
-
 }
 
   // Wait until the DOM has loaded before querying the document
