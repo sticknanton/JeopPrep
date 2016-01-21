@@ -70,16 +70,16 @@
 
   <div class="row">
     <div class="offset-by-three six columns">
-      <h3>Leaderboard</h3>
+      <h3 class="leaderboard">leaderboard</h3>
     </div>
   </div>
 
   <!-- Column Heads -->
-  <div class="row">
-    <div class="offset-by-one four columns">
+  <div class="row1">
+    <div class="four columns">
       <h5>Player</h5>
     </div>
-    <div class="three columns">
+    <div class="four columns">
       <h5>Correct Answers</h5>
     </div>
     <div class="four columns">
@@ -89,10 +89,10 @@
   <!-- Row for each user -->
   {{#each users}}
     <div class="row">
-      <div class="offset-by-one four columns">
+      <div class="four columns">
         <h5>{{this.username}}</h5>
       </div>
-      <div class="three columns">
+      <div class="four columns">
         <h5>{{this.correct}}</h5>
       </div>
       <div class="four columns">
