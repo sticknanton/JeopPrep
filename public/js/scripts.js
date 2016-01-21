@@ -513,23 +513,20 @@ function setViewStatsHandler(){
 }
 
 function renderUserStats(user) {
-  $('#game-time').hide();
+  var $viewStats = $('#view-stats').empty();
   var source = $('#view-stats-template').html();
   var template = Handlebars.compile(source);
   var compiled = template(user);
-  $('#view-stats').empty();
-  $('#view-stats').append(compiled);
-  $('#view-stats').show();
+  $viewStats.append(compiled);
+  $viewStats.slideToggle(250, 'swing');
 }
 
 // LEADERBOARD //
 
 function setLeaderboardHandler(){
   $('body').on('click', '.leaderboard', function(){
-    $('#view-stats').hide();
-    $('#game-time').hide();
     getAllUsers(function(users){
-      console.log(users);
+      renderLeaderboard(users);
     });
   });
 }
@@ -542,6 +539,17 @@ function getAllUsers(callback) {
       callback(usersData);
     }
   });
+}
+
+function renderLeaderboard(users){
+  var $leaderboard = $('#view-leaderboard').empty();
+  var source = $('#leaderboard-template').html();
+  var template = Handlebars.compile(source);
+  var compiled = template(users);
+
+  $leaderboard.append(compiled);
+  $leaderboard.slideToggle(250, 'swing');
+
 }
 
   // Wait until the DOM has loaded before querying the document

@@ -39,6 +39,9 @@ h1, h2, h3, h4, h5, h6 {
   font-size: .8em;
   width: 80%;
 }
+#view-stats {
+  display: none;
+}
 .dashboard-row {
   margin: 35px 0;
 }
