@@ -1,4 +1,4 @@
-# JeopPrep
+# [JeopPrep](http://jeopprep.herokuapp.com/)
 
 
 A single-player Jeopardy Training program for those that desire to be among the stars of the show! Sign up and log in to become a part of the action. The game will track your money earned, questions answered and show you a leaderboard for how you stack up against the competition.
