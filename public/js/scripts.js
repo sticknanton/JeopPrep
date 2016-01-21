@@ -452,6 +452,7 @@ function renderUserHeader(userData){
 function setLogOutHandler() {
   $('body').on('click', '#logout', function(){
     $.removeCookie('token');
+    location.reload();
     updateView();
   });
 }
