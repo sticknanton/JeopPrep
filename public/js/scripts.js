@@ -433,7 +433,7 @@ function renderHomeView(){
   $('#user-manager').show();
   $('#user-dashboard').hide();
   $('.user-only').hide();
-  
+
   $('#welcome-msg').empty();
   var $welcome = $('<h5>').text('Welcome!');
   var $msg = $('<h6>').text('Please Log In to Play');
@@ -444,6 +444,7 @@ function setNewGameHandler() {
   $('body').on('click', '.new-game', function(){
     $('#view-stats').hide();
     $('#game-time').show();
+    $('.new-game').hide();
     getGame();
     getCurrentUser( function (data) {
       renderTvListener(data.user)
