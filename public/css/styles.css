@@ -144,11 +144,23 @@ margin-top: 20%;
 font-size: 30px;
 }
 
+li.value:hover{
+  color: #228DFF;
+  }
+
+li.value:active{
+  color: firebrick;
+ }
 #seconds{
+  border: 2px solid;
+   border-radius: 25px;
+  border-style: dotted;
+    border-width: thick;
+    border-color: black;
   width: 60px;
   border: none;
-  background-color: transparent;
-  color: white;
+  background-color: white;
+  color: black;
   font-size: 35px;
   font-weight: bold;
   margin-left: 50%;
